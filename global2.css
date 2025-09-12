@@ -1,12 +1,9 @@
-/* ==================== RESET E CONFIGURAÇÕES GLOBAIS ==================== */
-/* Reset básico para remover margens e paddings padrão */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilos base do corpo do documento */
 body {
     font-family: 'Roboto', Arial, sans-serif;
     line-height: 1.6;
@@ -14,7 +11,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* Container principal para centralizar e limitar a largura do conteúdo */
 .container {
     width: 90%;
     max-width: 1200px;
@@ -22,8 +18,7 @@ body {
     padding: 0 15px;
 }
 
-/* ==================== CABEÇALHO/HEADER ==================== */
-/* Estilo do cabeçalho principal */
+/* Cabeçalho */
 header {
     background-color: #e3350d;
     padding: 15px 0;
@@ -32,141 +27,116 @@ header {
     z-index: 100;
 }
 
-/* Container flexível para logo e navegação */
 header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Estilo da logo no cabeçalho */
 .logo img {
     height: 50px;
 }
 
-/* ==================== FORMATAÇÃO DE TEXTO ==================== */
-/* Justificação de texto em todos os parágrafos */
 p {
     text-align: justify;
     text-justify: inter-word;
-    hyphens: auto;
 }
 
-/* ==================== NAVEGAÇÃO/MENU ==================== */
-/* Container da lista de navegação */
+/* Navegação */
 nav ul {
     display: flex;
     list-style: none;
 }
 
-/* Itens do menu de navegação */
 nav ul li {
     margin-left: 15px;
 }
 
-/* Links do menu de navegação */
 nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
     padding: 8px 15px;
-    border-radius: 20px; /* Bordas arredondadas */
-    background-color: rgba(255, 255, 255, 0.2); /* Fundo translúcido */
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
-    display: inline-block;
 }
 
-/* Efeito hover nos links de navegação */
 nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* Fundo mais claro no hover */
-    transform: translateY(-2px); /* Efeito de levantar */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Estilo para link ativo no menu */
-nav ul li a.active {
+nav ul li a.ativo {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
-/* ==================== RODAPÉ/FOOTER ==================== */
-/* Estilo do rodapé */
+/* Rodapé */
 footer {
     background-color: #2c2c2c;
     color: white;
     padding: 40px 0 20px;
 }
 
-/* Container flexível para as seções do rodapé */
-.footer-content {
+.conteudo-rodape {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-/* Seções individuais do rodapé */
-.footer-section {
+.secao-rodape {
     flex: 1;
     min-width: 200px;
     margin-bottom: 20px;
     padding: 0 15px;
 }
 
-/* Títulos das seções do rodapé */
-.footer-section h4 {
+.secao-rodape h4 {
     margin-bottom: 15px;
     font-size: 18px;
 }
 
-/* Listas no rodapé */
-.footer-section ul {
+.secao-rodape ul {
     list-style: none;
 }
 
-/* Itens das listas no rodapé */
-.footer-section ul li {
+.secao-rodape ul li {
     margin-bottom: 10px;
 }
 
-/* Links no rodapé */
-.footer-section ul li a {
+.secao-rodape ul li a {
     color: #ddd;
     text-decoration: none;
     transition: color 0.3s;
 }
 
-/* Efeito hover nos links do rodapé */
-.footer-section ul li a:hover {
+.secao-rodape ul li a:hover {
     color: #e3350d;
 }
 
-/* Container para ícones sociais */
-.social-icons {
+.icones-sociais {
     display: flex;
     gap: 15px;
 }
 
-/* Imagens dos ícones sociais */
-.social-icons a img {
+.icones-sociais a img {
     width: 30px;
     height: 30px;
     transition: transform 0.3s;
 }
 
-/* Efeito hover nos ícones sociais */
-.social-icons a img:hover {
+.icones-sociais a img:hover {
     transform: scale(1.1);
 }
 
-/* Área inferior do rodapé (copyright) */
-.footer-bottom {
+.rodape-inferior {
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid #444;
 }
 
-/* ==================== BOTÕES GLOBAIS ==================== */
-/* Estilo base para todos os botões */
+/* Botões */
 button {
     background-color: #e3350d;
     color: white;
@@ -178,44 +148,36 @@ button {
     transition: background-color 0.3s;
 }
 
-/* Efeito hover para botões */
 button:hover {
     background-color: #c12b0b;
 }
 
-/* Container para centralizar botões */
-.center-button {
+.botao-centralizado {
     text-align: center;
     margin-top: 20px;
 }
 
-/* ==================== RESPONSIVIDADE ==================== */
-/* Media query para tablets e dispositivos menores (até 768px) */
+/* Responsivo */
 @media (max-width: 768px) {
-    /* Altera o header para layout de coluna em mobile */
     header .container {
         flex-direction: column;
     }
     
-    /* Ajustes no menu de navegação para mobile */
     nav ul {
         margin-top: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
     
-    /* Ajuste de margens nos itens do menu para mobile */
     nav ul li {
         margin: 5px;
     }
     
-    /* Altera o rodapé para layout de coluna em mobile */
-    .footer-content {
+    .conteudo-rodape {
         flex-direction: column;
     }
     
-    /* Ajuste de margens nas seções do rodapé para mobile */
-    .footer-section {
+    .secao-rodape {
         margin-bottom: 30px;
     }
 }

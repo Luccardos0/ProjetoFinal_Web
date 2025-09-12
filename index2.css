@@ -1,66 +1,53 @@
-/* ==================== corpo SECTION - CARROSSEL ==================== */
-/* Container principal da seção corpo com carrossel */
-.corpo {
-    height: 100vh; /* Ocupa toda a altura da viewport */
-    min-height: 600px; /* Altura mínima para telas menores */
+/* Carrossel */
+.secao-principal {
+    height: 100vh;
+    min-height: 600px;
     position: relative;
     overflow: hidden;
 }
 
-/* Container dos slides do carrossel */
-.corpo-slides {
+.slides-principal {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-/* Estilo base para cada slide do carrossel */
 .slide {
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: 0;
-    animation: slideAnimation 20s infinite;
+    animation: trocar-slide 20s infinite;
     background-size: cover;
     background-position: center;
 }
 
-/* Primeira imagem do carrossel - fundosite.jpg */
 .slide-1 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/fundosite.jpg');
     animation-delay: 0s;
 }
 
-/* Segunda imagem do carrossel - fundosite2.jpg */
 .slide-2 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/fundosite2.jpg');
     animation-delay: 5s;
 }
 
-/* Terceira imagem do carrossel - fundosite3.avif */
 .slide-3 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/fundosite3.avif');
     animation-delay: 10s;
 }
 
-/* Quarta imagem do carrossel - fundosite4.webp */
 .slide-4 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/fundosite4.webp');
     animation-delay: 15s;
 }
 
-/* Animação para transição entre slides do carrossel */
-@keyframes slideAnimation {
-    0% { opacity: 0; }
-    5% { opacity: 1; }
-    20% { opacity: 1; }
-    25% { opacity: 0; }
-    100% { opacity: 0; }
+@keyframes trocar-slide {
+    0%, 25%, 100% { opacity: 0; }
+    5%, 20% { opacity: 1; }
 }
 
-/* ==================== CONTEÚDO PRINCIPAL corpo ==================== */
-/* Container do conteúdo sobreposto ao carrossel */
-.corpo-content {
+.conteudo-principal {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -77,25 +64,20 @@
     z-index: 10;
 }
 
-/* Estilo do título principal na corpo section */
-.corpo-content h2 {
+.conteudo-principal h2 {
     font-size: 2.5rem;
     margin-bottom: 15px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     line-height: 1.2;
 }
 
-/* Estilo do parágrafo/texto na corpo section */
-.corpo-content p {
+.conteudo-principal p {
     font-size: 1.2rem;
     margin-bottom: 25px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    line-height: 1.5;
 }
 
-/* ==================== BOTÕES/LINKS DA corpo SECTION ==================== */
-/* Container para agrupar os botões com espaçamento */
-.corpo-buttons {
+.botoes-principal {
     display: flex;
     gap: 20px;
     justify-content: center;
@@ -103,8 +85,7 @@
     flex-wrap: wrap;
 }
 
-/* Estilo base para links estilizados como botões */
-.corpo-button {
+.botao-principal {
     font-size: 1.1rem;
     padding: 12px 30px;
     border-radius: 30px;
@@ -114,161 +95,49 @@
     cursor: pointer;
     font-weight: bold;
     transition: all 0.3s ease;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     text-decoration: none;
-    display: inline-block;
-    text-align: center;
 }
 
-/* Efeitos hover para os botões */
-.corpo-button:hover {
+.botao-principal:hover {
     background-color: rgba(227, 53, 13, 0.9);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Remover estilos padrão de links */
-.corpo-button:focus {
-    outline: none;
-}
-
-/* ==================== QUADRADO DE TEXTO DESTACADO ==================== */
-/* Container para texto destacado (como funciona o jogo) */
-.texto-destaque {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    padding: 30px;
-    margin: 40px auto;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    max-width: 800px;
-    border: 2px solid #e3350d;
-}
-
-/* Título dentro do quadrado de texto destacado */
-.texto-destaque h2 {
-    color: #e3350d;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.2rem;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 15px;
-}
-
-/* Parágrafos dentro do quadrado de texto destacado */
-.texto-destaque p {
-    margin-bottom: 15px;
-    line-height: 1.6;
-    font-size: 1.1rem;
-}
-
-/* Remove margem inferior do último parágrafo */
-.texto-destaque p:last-child {
-    margin-bottom: 0;
-}
-
-/* ==================== SEÇÃO POKÉDEX PREVIEW ==================== */
-/* Container da seção de preview da pokédex */
-.pokedex-preview {
-    padding: 60px 0;
-    background-color: #f0f0f0;
-}
-
-/* Título da seção de preview da pokédex */
-.pokedex-preview h2 {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #e3350d;
-    font-size: 2rem;
-}
-
-/* Grid para layout dos cards de pokémon */
-.pokedex-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 25px;
-}
-
-/* Estilo individual de cada card de pokémon */
-.pokemon-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
-
-/* Efeito hover para cards de pokémon */
-.pokemon-card:hover {
-    transform: translateY(-5px);
-}
-
-/* Imagens dentro dos cards de pokémon */
-.pokemon-card img {
-    height: 120px;
-    margin-bottom: 15px;
-}
-
-/* Nomes dos pokémon dentro dos cards */
-.pokemon-card h3 {
-    color: #333;
-    margin-bottom: 5px;
-}
-
-/* Números/números dos pokémon dentro dos cards */
-.pokemon-card p {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-/* ==================== RESPONSIVIDADE ==================== */
-/* Ajustes para tablets (até 768px) */
+/* Responsivo */
 @media (max-width: 768px) {
-    .corpo-content {
+    .conteudo-principal {
         padding: 30px;
     }
     
-    .corpo-content h2 {
+    .conteudo-principal h2 {
         font-size: 2rem;
     }
     
-    .corpo-buttons {
+    .botoes-principal {
         flex-direction: column;
         align-items: center;
     }
-    
-    .pokedex-preview {
-        padding: 40px 0;
-    }
 }
 
-/* Ajustes para dispositivos móveis (até 480px) */
 @media (max-width: 480px) {
-    .corpo {
-        height: 100vh;
+    .secao-principal {
         min-height: 500px;
     }
     
-    .corpo-content {
+    .conteudo-principal {
         padding: 20px;
     }
     
-    .corpo-content h2 {
+    .conteudo-principal h2 {
         font-size: 1.8rem;
     }
     
-    .corpo-content p {
+    .conteudo-principal p {
         font-size: 1rem;
     }
     
-    .corpo-button {
+    .botao-principal {
         padding: 10px 20px;
         font-size: 1rem;
-    }
-    
-    .news-grid,
-    .pokedex-grid {
-        grid-template-columns: 1fr;
     }
 }

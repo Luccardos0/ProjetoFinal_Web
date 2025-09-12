@@ -27,86 +27,80 @@
 
     <main>
         <div class="container">
-            <h1 class="page-title">Jogo da Memória</h1>
+            <h1 class="titulo-pagina">Jogo da Memória</h1>
             
-            <!-- Seção de escolha do modo de jogo -->
-            <div class="game-mode-selection">
+            <div class="selecao-modo">
                 <h2>Escolha o modo de jogo:</h2>
-                <div class="mode-buttons">
-                    <button class="mode-btn singleplayer-btn active">Clássico</button>
-                    <button class="mode-btn multiplayer-btn">Contra o Tempo</button>
+                <div class="botoes-modo">
+                    <button class="botao-modo">Clássico</button>
+                    <button class="botao-modo">Contra o Tempo</button>
                 </div>
                 <h2>Escolha o tamanho do tabuleiro:</h2>
-<div class="board-size-buttons">
-    <button class="size-btn active" data-size="2">2x2</button>
-    <button class="size-btn" data-size="4">4x4</button>
-    <button class="size-btn" data-size="6">6x6</button>
-    <button class="size-btn" data-size="8">8x8</button>
-</div>
+                <div class="botoes-tamanho">
+                    <button class="botao-tamanho" data-size="2">2x2</button>
+                    <button class="botao-tamanho" data-size="4">4x4</button>
+                    <button class="botao-tamanho" data-size="6">6x6</button>
+                    <button class="botao-tamanho" data-size="8">8x8</button>
+                </div>
             </div>
             
-            <div class="game-container">
-                <!-- Painel de Informações da Partida -->
-                <div class="game-info">
-                    <div class="info-card">
+            <div class="container-jogo">
+                <div class="info-jogo">
+                    <div class="card-info">
                         <h3>Informações da Partida</h3>
-                        <div class="info-item">
-                            <span class="label">Tempo:</span>
-                            <span class="value">00:00</span>
+                        <div class="item-info">
+                            <span class="rotulo">Tempo:</span>
+                            <span class="valor">00:00</span>
                         </div>
-                        <div class="info-item">
-                            <span class="label">Jogadas:</span>
-                            <span class="value">0</span>
+                        <div class="item-info">
+                            <span class="rotulo">Jogadas:</span>
+                            <span class="valor">0</span>
                         </div>
-                        <div class="info-item">
-                            <span class="label">Tabuleiro:</span>
-                            <span class="value">3x3</span>
+                        <div class="item-info">
+                            <span class="rotulo">Tabuleiro:</span>
+                            <span class="valor">3x3</span>
                         </div>
-                        <div class="info-item">
-                            <span class="label">Modalidade:</span>
-                            <span class="value">Normal</span>
+                        <div class="item-info">
+                            <span class="rotulo">Modalidade:</span>
+                            <span class="valor">Normal</span>
                         </div>
-                        <div class="info-item">
-                            <span class="label">Tempo Restante:</span>
-                            <span class="value">-</span>
+                        <div class="item-info">
+                            <span class="rotulo">Tempo Restante:</span>
+                            <span class="valor">-</span>
                         </div>
                     </div>
 
-                    <!-- Seção do Modo Trapaça -->
-                    <div class="cheat-mode">
+                    <div class="modo-trapaca">
                         <h3>Modo Trapaça</h3>
-                        <div class="cheat-toggle">
-                            <div class="cheat-buttons">
-                                <button class="cheat-btn activate-btn">Ativar</button>
-                                <button class="cheat-btn deactivate-btn">Desativar</button>
+                        <div class="controles-trapaca">
+                            <div class="botoes-trapaca">
+                                <button class="botao-trapaca botao-ativar">Ativar</button>
+                                <button class="botao-trapaca botao-desativar">Desativar</button>
                             </div>
-                            <div class="cheat-status">
-                                <span class="status-text">Desativado</span>
+                            <div class="status-trapaca">
+                                <span class="texto-status">Desativado</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Controles do Jogo -->
-                    <div class="game-controls">
-                        <button class="control-btn start-btn">Iniciar Partida</button>
-                        <button class="control-btn restart-btn">Nova Partida</button>
-                        <a href="index2.html" class="control-btn back-btn">Voltar</a>
+                    <div class="controles-jogo">
+                        <button class="botao-controle botao-iniciar">Iniciar Partida</button>
+                        <button class="botao-controle botao-reiniciar">Nova Partida</button>
+                        <a href="index2.html" class="botao-controle botao-voltar">Voltar</a>
                     </div>
                 </div>
 
-                <!-- Área do Jogo (Tabuleiro) -->
-                <div class="game-board">
-                    <img src="img/tabuleiro.png" alt="Tabuleiro do Jogo da Memória" class="board-image">
-                    <p class="board-notice">Área interativa do jogo será implementada com JavaScript</p>
+                <div class="tabuleiro-jogo">
+                    <img src="img/tabuleiro.jpg" alt="Tabuleiro do Jogo da Memória" class="imagem-tabuleiro">
+                    <p class="nota-tabuleiro">Cartas meramente ilustrativas</p>
                 </div>
             </div>
 
-            <!-- Histórico de Partidas -->
-            <div class="history-section">
+            <div class="secao-historico">
                 <h2>Histórico de Partidas</h2>
                 
-                <div class="history-table">
-                    <div class="table-header">
+                <div class="tabela-historico">
+                    <div class="cabecalho-tabela">
                         <span>Data/Hora</span>
                         <span>Jogador</span>
                         <span>Tabuleiro</span>
@@ -116,44 +110,44 @@
                         <span>Resultado</span>
                     </div>
                     
-                    <div class="table-row">
+                    <div class="linha-tabela">
                         <span>10/09/2023 14:30</span>
                         <span>AshKetchum</span>
                         <span>3x3</span>
                         <span>Normal</span>
                         <span>01:45</span>
                         <span>24</span>
-                        <span class="result win">Vitória</span>
+                        <span class="resultado vitoria">Vitória</span>
                     </div>
                     
-                    <div class="table-row">
+                    <div class="linha-tabela">
                         <span>09/09/2023 16:12</span>
                         <span>AshKetchum</span>
                         <span>6x6</span>
                         <span>Contra o Tempo</span>
                         <span>03:20</span>
                         <span>42</span>
-                        <span class="result loss">Derrota</span>
+                        <span class="resultado derrota">Derrota</span>
                     </div>
                     
-                    <div class="table-row">
+                    <div class="linha-tabela">
                         <span>08/09/2023 11:05</span>
                         <span>AshKetchum</span>
                         <span>4x4</span>
                         <span>Normal</span>
                         <span>02:15</span>
                         <span>28</span>
-                        <span class="result win">Vitória</span>
+                        <span class="resultado vitoria">Vitória</span>
                     </div>
                     
-                    <div class="table-row">
+                    <div class="linha-tabela">
                         <span>07/09/2023 19:40</span>
                         <span>AshKetchum</span>
                         <span>5x5</span>
                         <span>Normal</span>
                         <span>04:10</span>
                         <span>35</span>
-                        <span class="result win">Vitória</span>
+                        <span class="resultado vitoria">Vitória</span>
                     </div>
                 </div>
             </div>
@@ -162,11 +156,10 @@
 
     <footer>
         <div class="container">
-            <div class="footer-content">
+            <div class="conteudo-rodape">
                 Faculdade de Tecnologia da Unicamp - Programação Web - 2025
             </div>
         </div>
     </footer>
-
 </body>
 </html>

@@ -1,53 +1,35 @@
-/* ==================== ESTILOS GERAIS ==================== */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.page-title {
+/* Página de Ranking */
+.titulo-pagina {
     text-align: center;
     color: #e3350d;
     font-size: 2.5rem;
     margin: 30px 0 20px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.ranking-info {
+.info-ranking {
     text-align: center;
     margin-bottom: 30px;
     color: #666;
     font-style: italic;
 }
 
-/* ==================== CONTAINER DO RANKING ==================== */
-.ranking-container {
+.conteiner-ranking {
     display: flex;
     gap: 30px;
     margin-bottom: 40px;
     flex-wrap: wrap;
 }
 
-.ranking-table {
+.tabela-ranking {
     flex: 2;
     min-width: 300px;
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border: 2px solid #e3350d;
     overflow: hidden;
 }
 
-.ranking-sidebar {
+.barra-lateral-ranking {
     flex: 1;
     min-width: 250px;
     display: flex;
@@ -55,8 +37,7 @@ body {
     gap: 20px;
 }
 
-/* ==================== TABELA DE RANKING ==================== */
-.table-header {
+.cabecalho-tabela {
     display: grid;
     grid-template-columns: 0.5fr 1.5fr 0.8fr 1fr 0.8fr 0.8fr 1fr;
     background-color: #e3350d;
@@ -67,7 +48,7 @@ body {
     gap: 10px;
 }
 
-.table-row {
+.linha-tabela {
     display: grid;
     grid-template-columns: 0.5fr 1.5fr 0.8fr 1fr 0.8fr 0.8fr 1fr;
     padding: 15px 10px;
@@ -77,50 +58,47 @@ body {
     align-items: center;
 }
 
-.table-row:nth-child(even) {
+.linha-tabela:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.table-row:last-child {
+.linha-tabela:last-child {
     border-bottom: none;
 }
 
-/* Destaques para os primeiros lugares */
-.first-place {
+.primeiro-lugar {
     background-color: #fff9c4 !important;
     border-left: 4px solid #ffd600;
 }
 
-.second-place {
+.segundo-lugar {
     background-color: #f5f5f5 !important;
     border-left: 4px solid #9e9e9e;
 }
 
-.third-place {
+.terceiro-lugar {
     background-color: #ffecb3 !important;
     border-left: 4px solid #ffa000;
 }
 
-.position {
+.posicao {
     font-weight: bold;
     font-size: 1.1rem;
 }
 
-.player {
+.jogador {
     font-weight: bold;
     color: #e3350d;
 }
 
-/* ==================== SIDEBAR ==================== */
-.sidebar-card {
+.cartao-lateral {
     background-color: #fff;
     border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border: 2px solid #e3350d;
 }
 
-.sidebar-card h3 {
+.cartao-lateral h3 {
     color: #e3350d;
     margin-top: 0;
     margin-bottom: 15px;
@@ -129,21 +107,21 @@ body {
     padding-bottom: 10px;
 }
 
-.sidebar-card ul {
+.cartao-lateral ul {
     list-style: none;
     padding: 0;
 }
 
-.sidebar-card ul li {
+.cartao-lateral ul li {
     padding: 8px 0;
     border-bottom: 1px dashed #eee;
 }
 
-.sidebar-card ul li:last-child {
+.cartao-lateral ul li:last-child {
     border-bottom: none;
 }
 
-.sidebar-card ul li:before {
+.cartao-lateral ul li:before {
     content: "•";
     color: #e3350d;
     font-weight: bold;
@@ -152,8 +130,7 @@ body {
     margin-left: -1em;
 }
 
-/* Ranking do usuário */
-.user-ranking {
+.ranking-usuario {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -161,27 +138,26 @@ body {
     margin: 15px 0;
 }
 
-.user-position {
+.posicao-usuario {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e3350d;
 }
 
-.user-name {
+.nome-usuario {
     font-weight: bold;
 }
 
-.user-board {
+.tabuleiro-usuario {
     color: #666;
 }
 
-.user-moves {
+.jogadas-usuario {
     color: #666;
     font-size: 0.9rem;
 }
 
-/* Botões */
-.improve-btn, .play-btn {
+.botao-melhorar, .botao-jogar {
     display: block;
     width: 100%;
     padding: 12px;
@@ -190,49 +166,47 @@ body {
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
     text-align: center;
     text-decoration: none;
     margin-top: 15px;
 }
 
-.improve-btn {
+.botao-melhorar {
     background-color: #e3350d;
     color: white;
 }
 
-.improve-btn:hover {
+.botao-melhorar:hover {
     background-color: #c12b0b;
 }
 
-.play-btn {
+.botao-jogar {
     background-color: #4caf50;
     color: white;
 }
 
-.play-btn:hover {
+.botao-jogar:hover {
     background-color: #3d8b40;
 }
 
-/* ==================== PROMPT DE NOVA PARTIDA ==================== */
-.new-game-prompt {
+.prompt-nova-partida {
     background-color: #fff;
     border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border: 2px solid #e3350d;
     text-align: center;
     margin-top: 40px;
-    display: none; /* Inicialmente oculto */
+    display: none;
 }
 
-.new-game-prompt h2 {
+.prompt-nova-partida h2 {
     color: #e3350d;
     margin-top: 0;
     margin-bottom: 15px;
 }
 
-.prompt-buttons {
+.botoes-prompt {
     display: flex;
     gap: 15px;
     justify-content: center;
@@ -240,43 +214,43 @@ body {
     flex-wrap: wrap;
 }
 
-.yes-btn, .no-btn {
+.botao-sim, .botao-nao {
     padding: 12px 25px;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
     min-width: 180px;
 }
 
-.yes-btn {
+.botao-sim {
     background-color: #4caf50;
     color: white;
 }
 
-.yes-btn:hover {
+.botao-sim:hover {
     background-color: #3d8b40;
 }
 
-.no-btn {
+.botao-nao {
     background-color: #f44336;
     color: white;
 }
 
-.no-btn:hover {
+.botao-nao:hover {
     background-color: #d32f2f;
 }
 
-/* ==================== RESPONSIVIDADE ==================== */
+/* Responsivo */
 @media (max-width: 900px) {
-    .ranking-container {
+    .conteiner-ranking {
         flex-direction: column;
     }
     
-    .table-header,
-    .table-row {
+    .cabecalho-tabela,
+    .linha-tabela {
         grid-template-columns: 0.5fr 1.2fr 0.7fr 0.9fr 0.7fr 0.7fr 0.9fr;
         gap: 8px;
         font-size: 0.9rem;
@@ -284,51 +258,51 @@ body {
 }
 
 @media (max-width: 768px) {
-    .table-header,
-    .table-row {
+    .cabecalho-tabela,
+    .linha-tabela {
         grid-template-columns: 0.5fr 1fr 0.6fr;
         gap: 8px;
     }
     
-    .table-header span:nth-child(4),
-    .table-row span:nth-child(4),
-    .table-header span:nth-child(5),
-    .table-row span:nth-child(5),
-    .table-header span:nth-child(6),
-    .table-row span:nth-child(6),
-    .table-header span:nth-child(7),
-    .table-row span:nth-child(7) {
+    .cabecalho-tabela span:nth-child(4),
+    .linha-tabela span:nth-child(4),
+    .cabecalho-tabela span:nth-child(5),
+    .linha-tabela span:nth-child(5),
+    .cabecalho-tabela span:nth-child(6),
+    .linha-tabela span:nth-child(6),
+    .cabecalho-tabela span:nth-child(7),
+    .linha-tabela span:nth-child(7) {
         display: none;
     }
     
-    .prompt-buttons {
+    .botoes-prompt {
         flex-direction: column;
         align-items: center;
     }
     
-    .yes-btn, .no-btn {
+    .botao-sim, .botao-nao {
         width: 100%;
         max-width: 250px;
     }
 }
 
 @media (max-width: 480px) {
-    .page-title {
+    .titulo-pagina {
         font-size: 2rem;
     }
     
-    .table-header,
-    .table-row {
+    .cabecalho-tabela,
+    .linha-tabela {
         grid-template-columns: 0.5fr 1fr;
         gap: 8px;
     }
     
-    .table-header span:nth-child(3),
-    .table-row span:nth-child(3) {
+    .cabecalho-tabela span:nth-child(3),
+    .linha-tabela span:nth-child(3) {
         display: none;
     }
     
-    .ranking-sidebar {
+    .barra-lateral-ranking {
         min-width: 100%;
     }
 }

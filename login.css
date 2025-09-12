@@ -1,102 +1,90 @@
-/* ==================== SEÇÃO DE LOGIN ==================== */
-/* Container principal da seção de login */
-/* Mudar .login-section para .secao-login */
+/* Formulário de Login */
 .secao-login {
     padding: 60px 0;
-    background: url('../img/fundosite3.avif') no-repeat center center fixed;
+    background: url('../img/fundosite3.avif') no-repeat center;
     background-size: cover;
     min-height: calc(100vh - 200px);
     display: flex;
     align-items: center;
 }
 
-/* Container do formulário */
-.form-container {
+.conteiner-formulario {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     padding: 40px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     max-width: 450px;
     margin: 0 auto;
     border: 3px solid #e3350d;
-    backdrop-filter: blur(10px);
 }
 
-/* Cabeçalho do formulário */
-.form-header {
+.cabecalho-formulario {
     text-align: center;
     margin-bottom: 30px;
 }
 
-.form-header h2 {
+.cabecalho-formulario h2 {
     color: #e3350d;
     font-size: 2.2rem;
     margin-bottom: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.form-header p {
+.cabecalho-formulario p {
     color: #666;
     font-size: 1.1rem;
 }
 
-/* Formulário de login */
-.login-form {
+.formulario-login {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Grupos de formulário */
-.form-group {
+.grupo-formulario {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-.form-group label {
+.grupo-formulario label {
     font-weight: bold;
     color: #333;
     font-size: 1rem;
 }
 
-.form-group input {
+.grupo-formulario input {
     padding: 12px 15px;
     border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s;
     background: #f8f9fa;
 }
 
-.form-group input:focus {
+.grupo-formulario input:focus {
     outline: none;
     border-color: #e3350d;
     background: white;
-    box-shadow: 0 0 0 3px rgba(227, 53, 13, 0.1);
 }
 
-/* Grupo de checkbox */
-.checkbox-group {
+.grupo-checkbox {
     flex-direction: row;
     align-items: center;
     gap: 10px;
     margin: 10px 0;
 }
 
-.checkbox-group input[type="checkbox"] {
+.grupo-checkbox input[type="checkbox"] {
     width: 18px;
     height: 18px;
 }
 
-.checkbox-group label {
+.grupo-checkbox label {
     font-weight: normal;
     margin: 0;
 }
 
-/* Botão de entrar */
-.btn-entrar {
-    background: linear-gradient(135deg, #e3350d 0%, #c12b0b 100%);
+.botao-entrar {
+    background-color: #e3350d;
     color: white;
     border: none;
     padding: 15px;
@@ -104,45 +92,37 @@
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s;
     margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    width: 100%;
 }
 
-.btn-entrar:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(227, 53, 13, 0.3);
+.botao-entrar:hover {
+    background-color: #c12b0b;
 }
 
-.btn-entrar:active {
-    transform: translateY(0);
-}
-
-/* Link para cadastro */
-.cadastro-link {
+.link-cadastro {
     text-align: center;
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
-.cadastro-link p {
+.link-cadastro p {
     color: #666;
     margin: 0;
 }
 
-.cadastro-link a {
+.link-cadastro a {
     color: #e3350d;
     text-decoration: none;
     font-weight: bold;
 }
 
-.cadastro-link a:hover {
+.link-cadastro a:hover {
     text-decoration: underline;
 }
 
-/* Link para recuperar senha */
 .esqueci-senha {
     text-align: center;
     margin-top: 15px;
@@ -158,71 +138,42 @@
     color: #e3350d;
     text-decoration: underline;
 }
-/*botão entrar*/
-.btn-entrar-link {
-    display: block;
-    background: linear-gradient(135deg, #e3350d 0%, #c12b0b 100%);
-    color: white;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: 100%;
-    text-align: center;
-    text-decoration: none;
-}
 
-.btn-entrar-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(227, 53, 13, 0.3);
-    color: white;
-    text-decoration: none;
-}
-
-.btn-entrar-link:active {
-    transform: translateY(0);
-}
-/* ==================== RESPONSIVIDADE ==================== */
+/* Responsivo */
 @media (max-width: 768px) {
-    .login-section {
+    .secao-login {
         padding: 40px 0;
     }
     
-    .form-container {
+    .conteiner-formulario {
         padding: 30px 20px;
         margin: 20px;
     }
     
-    .form-header h2 {
+    .cabecalho-formulario h2 {
         font-size: 1.8rem;
     }
     
-    .checkbox-group {
+    .grupo-checkbox {
         flex-direction: column;
         align-items: flex-start;
     }
 }
 
 @media (max-width: 480px) {
-    .form-container {
+    .conteiner-formulario {
         padding: 25px 15px;
     }
     
-    .form-header h2 {
+    .cabecalho-formulario h2 {
         font-size: 1.6rem;
     }
     
-    .form-group input {
+    .grupo-formulario input {
         padding: 10px 12px;
     }
     
-    .btn-entrar {
+    .botao-entrar {
         padding: 12px;
         font-size: 1rem;
     }
