@@ -87,8 +87,8 @@ body {
 }
 
 .botao-modo {
-    background-color: #e3350d;
-    color: white;
+    background-color: #ffffff;
+    color: #e3350d;
     font-size: 0.9rem;
 }
 
@@ -100,9 +100,9 @@ body {
     min-width: 50px;
 }
 
-.botao-modo:hover {
-    background-color: #c12b0b;
-    border-color: #c12b0b;
+.botao-modo:not(.ativo):hover {
+    background-color: #ffece8; /* Mesma cor suave do hover do botão de tamanho */
+    border-color: #e3350d;     /* Mantém a cor da borda original */
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(227, 53, 13, 0.3);
 }
@@ -402,4 +402,65 @@ body {
     .selecao-modo h2 {
         font-size: 1.3rem;
     }
+}
+
+/* ======================== */
+/* ESTILOS DO JOGO DA MEMÓRIA */
+/* ======================== */
+
+.tabuleiro-jogo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Começamos com um 4x4 como padrão */
+    gap: 15px;
+    perspective: 1000px; /* Efeito 3D para o "flip" */
+}
+
+.card {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Garante que a carta seja sempre um quadrado */
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden; /* Esconde o lado de trás da face */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.front {
+    background: #e3350d url('img/pokebola.png') center center / 60% no-repeat; /* Cor de fundo com imagem da pokebola */
+    border: 3px solid #fff;
+}
+
+.back {
+    background-color: #f9f9f9;
+    transform: rotateY(180deg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 3px solid #4caf50; /* Borda verde para indicar a face da imagem */
+}
+
+/* Adiciona este novo estilo no final do seu telajogo.css */
+
+.botao-tamanho.ativo {
+    background-color: #e3350d; /* Fundo vermelho */
+    color: white; /* Texto branco */
+}
+
+/* Adicione este novo estilo no final do seu telajogo.css */
+
+.botao-modo.ativo {
+    background-color: #e3350d; /* Fundo vermelho */
+    color: white; /* Texto branco */
 }

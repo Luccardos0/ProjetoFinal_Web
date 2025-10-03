@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Memória - Memóremon</title>
+    <link rel="icon" href="img/pokebola.png" type="image/png">
     <link rel="stylesheet" href="global2.css">
     <link rel="stylesheet" href="telajogo.css">
 </head>
@@ -32,13 +33,13 @@
             <div class="selecao-modo">
                 <h2>Escolha o modo de jogo:</h2>
                 <div class="botoes-modo">
-                    <button class="botao-modo">Clássico</button>
+                    <button class="botao-modo ativo">Clássico</button>
                     <button class="botao-modo">Contra o Tempo</button>
                 </div>
                 <h2>Escolha o tamanho do tabuleiro:</h2>
                 <div class="botoes-tamanho">
                     <button class="botao-tamanho" data-size="2">2x2</button>
-                    <button class="botao-tamanho" data-size="4">4x4</button>
+                    <button class="botao-tamanho ativo" data-size="4">4x4</button>
                     <button class="botao-tamanho" data-size="6">6x6</button>
                     <button class="botao-tamanho" data-size="8">8x8</button>
                 </div>
@@ -50,19 +51,19 @@
                         <h3>Informações da Partida</h3>
                         <div class="item-info">
                             <span class="rotulo">Tempo:</span>
-                            <span class="valor">00:00</span>
+                            <span class="valor" id="tempo-valor">00:00</span>
                         </div>
                         <div class="item-info">
                             <span class="rotulo">Jogadas:</span>
-                            <span class="valor">0</span>
+                            <span class="valor" id="jogadas-valor">0</span>
                         </div>
                         <div class="item-info">
                             <span class="rotulo">Tabuleiro:</span>
-                            <span class="valor">3x3</span>
+                            <span class="valor" id="tabuleiro-valor">3x3</span>
                         </div>
                         <div class="item-info">
                             <span class="rotulo">Modalidade:</span>
-                            <span class="valor">Normal</span>
+                            <span class="valor" id="modalidade-valor" >Normal</span>
                         </div>
                         <div class="item-info">
                             <span class="rotulo">Tempo Restante:</span>
@@ -86,7 +87,7 @@
                     <div class="controles-jogo">
                         <button class="botao-controle botao-iniciar">Iniciar Partida</button>
                         <button class="botao-controle botao-reiniciar">Nova Partida</button>
-                        <a href="index2.html" class="botao-controle botao-voltar">Voltar</a>
+                        <a href="index2.html" class="botao-controle botao-voltar">Desistir</a>
                     </div>
                 </div>
 
@@ -161,5 +162,6 @@
             </div>
         </div>
     </footer>
+    <script src="telajogo.js"></script>
 </body>
 </html>
