@@ -25,12 +25,12 @@
     //  2. DADOS, CONFIGURAÇÕES E ESTADO DO JOGO (STATE)
     // -------------------------------------------------------------------
     const POKEMONS = [
-        'bulbasaur', 'charmander', 'squirtle', 'pikachu', 'jigglypuff', 'meowth', 
-        'psyduck', 'snorlax', 'dragonite', 'mewtwo', 'chikorita', 'cyndaquil', 
-        'totodile', 'togepi', 'marill', 'sudowoodo', 'wobbuffet', 'girafarig', 
-        'dunsparce', 'gligar', 'treecko', 'torchic', 'mudkip', 'gardevoir', 
-        'slakoth', 'loudred', 'makuhita', 'azurill', 'sableye', 'mawile', 
-        'plusle', 'minun'
+        'pikachu', 'charizard', 'eevee', 'mewtwo', 'mew', 'gengar', 
+        'lucario', 'greninja', 'umbreon', 'sylveon', 'arcanine', 'dragonite', 
+        'blastoise', 'bulbasaur', 'squirtle', 'charmander', 'lapras', 'snorlax', 
+        'jigglypuff', 'psyduck', 'gyrados', 'alakazam', 'magikarp', 'lugia', 
+        'rayquaza', 'jirachi', 'vaporeon', 'jolteon', 'flareon', 'hooh', 
+        'gardevoir', 'darkrai'
     ];
     const TEMPO_POR_TAMANHO = { 2: 30, 4: 90, 6: 180, 8: 300 };
 
