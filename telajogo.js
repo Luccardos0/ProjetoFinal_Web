@@ -1,245 +1,232 @@
-/**
- * @file telajogo.js
- * @description Lógica principal para o jogo da memória "Memóremon" do projeto de SI401.
- * @author Pedro Coelho Terossi
+/*
+   Jogo da Memória "Memóremon"
+   Lógica do Jogo da Memória para a Matéria de Web.
+   Autor: Pedro Coelho Terossi 
  */
 
-(() => {
-    // -------------------------------------------------------------------
-    //  1. MAPEAMENTO DOS ELEMENTOS (DOM)
-    // -------------------------------------------------------------------
-    const tabuleiro = document.querySelector('.tabuleiro-jogo');
-    const botaoIniciar = document.querySelector('.botao-iniciar');
-    const botaoReiniciar = document.querySelector('.botao-reiniciar');
-    const botoesTamanho = document.querySelectorAll('.botao-tamanho');
-    const botoesModo = document.querySelectorAll('.botao-modo');
-    const tempoValor = document.querySelector('#tempo-valor');
-    const jogadasValor = document.querySelector('#jogadas-valor');
-    const tabuleiroValor = document.querySelector('#tabuleiro-valor');
-    const modalidadeValor = document.querySelector('#modalidade-valor');
-    const botaoAtivarTrapaca = document.querySelector('.botao-ativar');
-    const botaoDesativarTrapaca = document.querySelector('.botao-desativar');
-    const statusTrapaca = document.querySelector('.texto-status');
+document.addEventListener('DOMContentLoaded', iniciarEventos);
 
-    // -------------------------------------------------------------------
-    //  2. DADOS, CONFIGURAÇÕES E ESTADO DO JOGO (STATE)
-    // -------------------------------------------------------------------
-    const POKEMONS = [
-        'pikachu', 'charizard', 'eevee', 'mewtwo', 'mew', 'gengar', 
-        'lucario', 'greninja', 'umbreon', 'sylveon', 'arcanine', 'dragonite', 
-        'blastoise', 'bulbasaur', 'squirtle', 'charmander', 'lapras', 'snorlax', 
-        'jigglypuff', 'psyduck', 'gyrados', 'alakazam', 'magikarp', 'lugia', 
-        'rayquaza', 'jirachi', 'vaporeon', 'jolteon', 'flareon', 'hooh', 
-        'gardevoir', 'darkrai'
-    ];
-    const TEMPO_POR_TAMANHO = { 2: 30, 4: 90, 6: 180, 8: 300 };
+  // Seleção dos elementos principais da tela 
+  const tabuleiro = document.querySelector('.tabuleiro-jogo');
+  const botaoIniciar = document.querySelector('.botao-iniciar');
+  const botaoReiniciar = document.querySelector('.botao-reiniciar');
+  const botoesTamanho = document.querySelectorAll('.botao-tamanho');
+  const botoesModo = document.querySelectorAll('.botao-modo');
+  const tempoValor = document.querySelector('#tempo-valor');
+  const jogadasValor = document.querySelector('#jogadas-valor');
+  const tabuleiroValor = document.querySelector('#tabuleiro-valor');
+  const modalidadeValor = document.querySelector('#modalidade-valor');
+  const botaoAtivarTrapaca = document.querySelector('.botao-ativar');
+  const botaoDesativarTrapaca = document.querySelector('.botao-desativar');
+  const statusTrapaca = document.querySelector('.texto-status');
 
-    let tamanhoSelecionado = 4;
-    let modoSelecionado = 'Clássico';
-    let hasFlippedCard, lockBoard, firstCard, secondCard;
-    let moves, timer, seconds, matchedPairs, totalPairs;
-    let timerRodando = false;
+  // Configurações iniciais e estado do jogo 
+  const POKEMONS = [
+    'pikachu', 'charizard', 'eevee', 'mewtwo', 'mew', 'gengar',
+    'lucario', 'greninja', 'umbreon', 'sylveon', 'arcanine', 'dragonite',
+    'blastoise', 'bulbasaur', 'squirtle', 'charmander', 'lapras', 'snorlax',
+    'jigglypuff', 'psyduck', 'gyrados', 'alakazam', 'magikarp', 'lugia',
+    'rayquaza', 'jirachi', 'vaporeon', 'jolteon', 'flareon', 'hooh', 'gardevoir', 'darkrai'
+  ];
 
-    // -------------------------------------------------------------------
-    //  3. LÓGICA PRINCIPAL DO JOGO
-    // -------------------------------------------------------------------
-    function iniciarJogo(iniciarTimerImediatamente = false) {
-        tabuleiroValor.textContent = `${tamanhoSelecionado}x${tamanhoSelecionado}`;
-        modalidadeValor.textContent = modoSelecionado;
-        tabuleiro.innerHTML = '';
-        tabuleiro.style.gridTemplateColumns = `repeat(${tamanhoSelecionado}, 1fr)`;
-        totalPairs = (tamanhoSelecionado * tamanhoSelecionado) / 2;
-        const pokemonsParaOJogo = POKEMONS.slice(0, totalPairs);
-        const baralho = [...pokemonsParaOJogo, ...pokemonsParaOJogo];
-        baralho.sort(() => Math.random() - 0.5);
+  const TEMPO_POR_TAMANHO = { 2: 30, 4: 90, 6: 180, 8: 300 };
 
-        baralho.forEach(pokemon => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.dataset.name = pokemon;
-            card.addEventListener('click', flipCard);
-            const frontFace = document.createElement('div');
-            frontFace.className = 'front';
-            const backFace = document.createElement('div');
-            backFace.className = 'back';
-            backFace.style.backgroundImage = `url('img/${pokemon}.png')`;
-            card.appendChild(frontFace);
-            card.appendChild(backFace);
-            tabuleiro.appendChild(card);
-        });
+  // Variáveis de controle do jogo
+  let tamanho = 4;
+  let modo = 'Clássico';
+  let virouUmaCarta = false;
+  let travarTabuleiro = false; // bloqueia cliques (usado enquanto cartas estão desvirando).
+  let primeiraCarta, segundaCarta;
+  let jogadas = 0;
+  let timer = null;
+  let segundos = 0;
+  let paresEncontrados = 0;
+  let totalPares = 0;
+  let timerAtivo = false;
 
-        resetGameInfo();
-        if (iniciarTimerImediatamente) {
-            iniciarTimers();
-        }
+  // Criando o tabuleiro e iniciando o jogo 
+  function iniciarJogo(iniciarTimer = false) {
+    tabuleiroValor.textContent = `${tamanho}x${tamanho}`;
+    modalidadeValor.textContent = modo;
+    tabuleiro.innerHTML = ''; //Limpa o Tabuleiro
+    tabuleiro.style.gridTemplateColumns = `repeat(${tamanho}, 1fr)`;
+    tabuleiro.style.gridTemplateRows = `repeat(${tamanho}, 1fr)`;
+
+    totalPares = (tamanho * tamanho) / 2;
+
+    const pokemonsUsados = POKEMONS.slice(0, totalPares);
+    const baralho = [...pokemonsUsados, ...pokemonsUsados].sort(() => Math.random() - 0.5);
+
+    baralho.forEach(pokemon => {
+      const carta = document.createElement('div');
+      carta.className = 'card';
+      carta.dataset.name = pokemon;
+      carta.addEventListener('click', virarCarta);
+
+      const frente = document.createElement('div');
+      frente.className = 'front';
+
+      const verso = document.createElement('div');
+      verso.className = 'back';
+      verso.style.backgroundImage = `url('img/${pokemon}.png')`;
+
+      carta.appendChild(frente); //Insere a frente na Carta
+      carta.appendChild(verso); //Insere o verso na Carta
+      tabuleiro.appendChild(carta); //Insere a carta no tabuleiro
+    });
+
+    reiniciarStatus();
+    if (iniciarTimer) comecarTempo();
+  }
+
+  // Função chamada ao clicar em uma carta 
+  function virarCarta() {
+    if (!timerAtivo) comecarTempo();
+    if (travarTabuleiro || this === primeiraCarta) return;
+
+    this.classList.add('flip');
+
+    if (!virouUmaCarta) {
+      virouUmaCarta = true;
+      primeiraCarta = this;
+      return;
     }
 
-    function flipCard() {
-        if (!timerRodando) {
-            iniciarTimers();
-        }
-        if (lockBoard || this === firstCard) return;
-        this.classList.add('flip');
-        if (!hasFlippedCard) {
-            hasFlippedCard = true;
-            firstCard = this;
-            return;
-        }
-        secondCard = this;
-        updateMoves();
-        checkForMatch();
-    }
+    segundaCarta = this;
+    jogadas++;
+    jogadasValor.textContent = jogadas;
+    checarPar();
+  }
 
-    function checkForMatch() {
-        const isMatch = firstCard.dataset.name === secondCard.dataset.name;
-        isMatch ? disableCards() : unflipCards();
-    }
+  function checarPar() {
+    const acerto = primeiraCarta.dataset.name === segundaCarta.dataset.name;
+    acerto ? marcarPar() : desvirarCartas();
+  }
 
-    function disableCards() {
-        firstCard.removeEventListener('click', flipCard);
-        secondCard.removeEventListener('click', flipCard);
-        firstCard.classList.add('matched');
-        secondCard.classList.add('matched');
-        matchedPairs++;
-        resetBoard();
-        checkWinCondition();
-    }
+  function marcarPar() {
+    primeiraCarta.removeEventListener('click', virarCarta);
+    segundaCarta.removeEventListener('click', virarCarta);
+    primeiraCarta.classList.add('matched');
+    segundaCarta.classList.add('matched');
+    paresEncontrados++;
+    resetarSelecao();
+    if (paresEncontrados === totalPares) fimDeJogo(true);
+  }
 
-    function unflipCards() {
-        lockBoard = true;
-        setTimeout(() => {
-            firstCard.classList.remove('flip');
-            secondCard.classList.remove('flip');
-            resetBoard();
-        }, 1200);
-    }
+  function desvirarCartas() {
+    travarTabuleiro = true;
+    setTimeout(() => {
+      primeiraCarta.classList.remove('flip');
+      segundaCarta.classList.remove('flip');
+      resetarSelecao();
+    }, 1200);
+  }
 
-    // -------------------------------------------------------------------
-    //  4. FUNÇÕES DE CONTROLE E UI
-    // -------------------------------------------------------------------
-    function resetBoard() {
-        [hasFlippedCard, lockBoard] = [false, false];
-        [firstCard, secondCard] = [null, null];
-    }
+  // Controle de estado e fim de jogo
+  function resetarSelecao() {
+    [virouUmaCarta, travarTabuleiro] = [false, false];
+    [primeiraCarta, segundaCarta] = [null, null];
+  }
 
-    function checkWinCondition() {
-        if (matchedPairs === totalPairs) {
-            endGame(true);
-        }
-    }
+  function fimDeJogo(venceu) {
+    clearInterval(timer);
+    travarTabuleiro = true;
+    setTimeout(() => {
+      if (venceu) {
+        alert(`Parabéns! Você venceu com ${jogadas} jogadas em ${tempoValor.textContent}.`);
+      } else {
+        alert(`Tempo esgotado! Fim de jogo.`);
+      }
+    }, 400);
+  }
 
-    function endGame(playerWon) {
-        clearInterval(timer);
-        lockBoard = true;
-        setTimeout(() => {
-            if (playerWon) {
-                alert(`Parabéns! Você venceu em ${moves} jogadas e um tempo de ${tempoValor.textContent}!`);
-            } else {
-                alert(`Tempo esgotado! Você perdeu.`);
-            }
-        }, 500);
-    }
+  function reiniciarStatus() {
+    jogadas = 0;
+    paresEncontrados = 0;
+    jogadasValor.textContent = '0';
+    travarTabuleiro = false;
+    clearInterval(timer);
+    timerAtivo = false;
+    segundos = 0;
+    tempoValor.textContent = '00:00';
+    botaoDesativarTrapaca.disabled = true;
+    botaoAtivarTrapaca.disabled = false;
+    statusTrapaca.textContent = 'Desativado';
+  }
 
-    function updateMoves() {
-        moves++;
-        jogadasValor.textContent = moves;
-    }
+  // Timer 
+  function comecarTempo() {
+    timerAtivo = true;
+    modo === 'Clássico' ? tempoCrescente() : tempoRegressivo();
+  }
 
-    function resetGameInfo() {
-        moves = 0;
-        matchedPairs = 0;
-        jogadasValor.textContent = '0';
-        lockBoard = false;
-        clearInterval(timer);
-        timerRodando = false;
-        seconds = 0;
-        tempoValor.textContent = '00:00';
-        botaoDesativarTrapaca.disabled = true;
-        botaoAtivarTrapaca.disabled = false;
-        statusTrapaca.textContent = 'Desativado';
-    }
+  function tempoCrescente() {
+    segundos = 0;
+    tempoValor.textContent = formatarTempo(segundos);
+    timer = setInterval(() => {
+      segundos++;
+      tempoValor.textContent = formatarTempo(segundos);
+    }, 1000);
+  }
 
-    function iniciarTimers() {
-        timerRodando = true;
-        modoSelecionado === 'Clássico' ? startTimer() : startCountdownTimer();
-    }
+  function tempoRegressivo() {
+    segundos = TEMPO_POR_TAMANHO[tamanho];
+    tempoValor.textContent = formatarTempo(segundos);
+    timer = setInterval(() => {
+      segundos--;
+      tempoValor.textContent = formatarTempo(segundos);
+      if (segundos <= 0) fimDeJogo(false);
+    }, 1000);
+  }
 
-    function startTimer() {
-        seconds = 0;
-        tempoValor.textContent = formatTime(seconds);
-        timer = setInterval(() => {
-            seconds++;
-            tempoValor.textContent = formatTime(seconds);
-        }, 1000);
-    }
+  function formatarTempo(total) {
+    const min = Math.floor(total / 60);
+    const seg = total % 60;
+    return `${String(min).padStart(2, '0')}:${String(seg).padStart(2, '0')}`;
+  }
 
-    function startCountdownTimer() {
-        seconds = TEMPO_POR_TAMANHO[tamanhoSelecionado];
-        tempoValor.textContent = formatTime(seconds);
-        timer = setInterval(() => {
-            seconds--;
-            tempoValor.textContent = formatTime(seconds);
-            if (seconds <= 0) {
-                endGame(false);
-            }
-        }, 1000);
-    }
+  // Modo Trapaça (mostrar/ocultar cartas)
+    function mostrarCartas() {
+    document.querySelectorAll('.card:not(.matched)').forEach(c => c.classList.add('flip'));
+    statusTrapaca.textContent = 'Ativado';
+    botaoAtivarTrapaca.disabled = true;
+    botaoDesativarTrapaca.disabled = false;
+  }
 
-    function formatTime(totalSeconds) {
-        const min = Math.floor(totalSeconds / 60);
-        const sec = totalSeconds % 60;
-        return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
-    }
+  function esconderCartas() {
+    document.querySelectorAll('.card:not(.matched)').forEach(c => c.classList.remove('flip'));
+    statusTrapaca.textContent = 'Desativado';
+    botaoAtivarTrapaca.disabled = false;
+    botaoDesativarTrapaca.disabled = true;
+  }
 
-    // -------------------------------------------------------------------
-    //  5. MODO TRAPAÇA
-    // -------------------------------------------------------------------
-    function mostrarTodasCartas() {
-        const cartasOcultas = document.querySelectorAll('.card:not(.matched)');
-        cartasOcultas.forEach(card => card.classList.add('flip'));
-        statusTrapaca.textContent = 'Ativado';
-        botaoAtivarTrapaca.disabled = true;
-        botaoDesativarTrapaca.disabled = false;
-    }
+  // Inicialização dos botões e do jogo
+  function iniciarEventos() {
+    botoesTamanho.forEach(botao => {
+      botao.addEventListener('click', () => {
+        botoesTamanho.forEach(b => b.classList.remove('ativo'));
+        botao.classList.add('ativo');
+        tamanho = parseInt(botao.dataset.size);
+        iniciarJogo(true);
+      });
+    });
 
-    function ocultarCartasNaoCombinadas() {
-        const cartasOcultas = document.querySelectorAll('.card:not(.matched)');
-        cartasOcultas.forEach(card => card.classList.remove('flip'));
-        statusTrapaca.textContent = 'Desativado';
-        botaoAtivarTrapaca.disabled = false;
-        botaoDesativarTrapaca.disabled = true;
-    }
+    botoesModo.forEach(botao => {
+      botao.addEventListener('click', () => {
+        botoesModo.forEach(b => b.classList.remove('ativo'));
+        botao.classList.add('ativo');
+        modo = botao.textContent;
+        iniciarJogo(true);
+      });
+    });
 
-    // -------------------------------------------------------------------
-    //  6. INICIALIZAÇÃO DOS EVENT LISTENERS E DO JOGO
-    // -------------------------------------------------------------------
-    function inicializar() {
-        botoesTamanho.forEach(botao => {
-            botao.addEventListener('click', () => {
-                botoesTamanho.forEach(btn => btn.classList.remove('ativo'));
-                botao.classList.add('ativo');
-                tamanhoSelecionado = parseInt(botao.dataset.size);
-                iniciarJogo(true); // Inicia novo jogo ao mudar tamanho
-            });
-        });
+    botaoIniciar.addEventListener('click', () => iniciarJogo(true));
+    botaoReiniciar.addEventListener('click', () => iniciarJogo(true));
+    botaoAtivarTrapaca.addEventListener('click', mostrarCartas);
+    botaoDesativarTrapaca.addEventListener('click', esconderCartas);
 
-        botoesModo.forEach(botao => {
-            botao.addEventListener('click', () => {
-                botoesModo.forEach(btn => btn.classList.remove('ativo'));
-                botao.classList.add('ativo');
-                modoSelecionado = botao.textContent;
-                iniciarJogo(true); // Inicia novo jogo ao mudar modo
-            });
-        });
+    iniciarJogo(false);
+  }
 
-        botaoIniciar.addEventListener('click', () => iniciarJogo(true));
-        botaoReiniciar.addEventListener('click', () => iniciarJogo(true));
-        botaoAtivarTrapaca.addEventListener('click', mostrarTodasCartas);
-        botaoDesativarTrapaca.addEventListener('click', ocultarCartasNaoCombinadas);
+  iniciarEventos();
 
-        iniciarJogo(false);
-    }
-
-    inicializar();
-
-})();
