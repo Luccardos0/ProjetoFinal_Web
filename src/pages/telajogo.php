@@ -4,27 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Memória - Memóremon</title>
-    <link rel="icon" href="img/pokebola.png" type="image/png">
-    <link rel="stylesheet" href="global2.css">
-    <link rel="stylesheet" href="telajogo.css">
+    <link rel="icon" href="../img/pokebola.png" type="image/png">
+    <link rel="stylesheet" href="../css/global2.css">
+    <link rel="stylesheet" href="../css/telajogo.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="img/logo2.png" alt="Memóremon">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index2.html">Início</a></li>
-                    <li><a href="telajogo.html">Jogo</a></li>
-                    <li><a href="login.html">Área do Jogador</a></li>
-                    <li><a href="editarperfil.html">Editar Perfil</a></li>
-                    <li><a href="ranking.html">Ranking</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    
+    <?php require '../components/header.php'; ?>
 
     <main>
         <div class="container">
@@ -87,12 +73,12 @@
                     <div class="controles-jogo">
                         <button class="botao-controle botao-iniciar">Iniciar Partida</button>
                         <button class="botao-controle botao-reiniciar">Nova Partida</button>
-                        <a href="index2.html" class="botao-controle botao-voltar">Desistir</a>
+                        <a href="./index2.html" class="botao-controle botao-voltar">Desistir</a>
                     </div>
                 </div>
 
                 <div class="tabuleiro-jogo">
-                    <img src="img/tabuleiro.jpg" alt="Tabuleiro do Jogo da Memória" class="imagem-tabuleiro">
+                    <img src="../img/tabuleiro.jpg" alt="Tabuleiro do Jogo da Memória" class="imagem-tabuleiro">
                     <p class="nota-tabuleiro">Cartas meramente ilustrativas</p>
                 </div>
             </div>
@@ -162,6 +148,6 @@
             </div>
         </div>
     </footer>
-    <script src="telajogo.js"></script>
+    <script src="../js/telajogo.js"></script>
 </body>
 </html>

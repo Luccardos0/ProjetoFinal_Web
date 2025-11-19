@@ -1,7 +1,7 @@
 /*
    Jogo da Memória "Memóremon"
    Lógica do Jogo da Memória para a Matéria de Web.
-   Autor: Pedro Coelho Terossi 
+   Autores: Pedro Coelho Terossi, Leonardo Bonfá Schroeder, Lucas de Olivera Lopes Cardoso e Guilherme Vicente Ramalho. 
  */
 
 document.addEventListener('DOMContentLoaded', iniciarEventos);
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', iniciarEventos);
 
       const verso = document.createElement('div');
       verso.className = 'back';
-      verso.style.backgroundImage = `url('img/${pokemon}.png')`;
+      verso.style.backgroundImage = `url('../img/${pokemon}.png')`;
 
       carta.appendChild(frente); //Insere a frente na Carta
       carta.appendChild(verso); //Insere o verso na Carta
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', iniciarEventos);
   }
 
   // Modo Trapaça (mostrar/ocultar cartas)
-    function mostrarCartas() {
+  function mostrarCartas() {
     document.querySelectorAll('.card:not(.matched)').forEach(c => c.classList.add('flip'));
     statusTrapaca.textContent = 'Ativado';
     botaoAtivarTrapaca.disabled = true;

@@ -4,27 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Memóremon</title>
-    <link rel="icon" href="img/pokebola.png" type="image/png">
-    <link rel="stylesheet" href="global2.css">
-    <link rel="stylesheet" href="editarperfil.css">
+    <link rel="icon" href="../img/pokebola.png" type="image/png">
+    <link rel="stylesheet" href="../css/global2.css">
+    <link rel="stylesheet" href="../css/editarperfil.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="img/logo2.png" alt="Memóremon">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index2.html">Início</a></li>
-                    <li><a href="telajogo.html">Jogo</a></li>
-                    <li><a href="login.html">Área do Jogador</a></li>
-                    <li><a href="editarperfil.html">Editar Perfil</a></li>
-                    <li><a href="ranking.html">Ranking</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    
+    <?php require '../components/header.php'; ?>
 
     <main>
         <section class="secao-editar">

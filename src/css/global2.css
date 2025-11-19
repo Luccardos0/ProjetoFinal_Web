@@ -73,69 +73,18 @@ nav ul li a.ativo {
 
 /* Rodapé */
 footer {
-    background-color: #2c2c2c;
+    background-color: #130f0f;
     color: white;
-    padding: 40px 0 20px;
+    text-align: center;
+    padding: 2.5vh;
 }
 
 .conteudo-rodape {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.secao-rodape {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 20px;
-    padding: 0 15px;
-}
-
-.secao-rodape h4 {
-    margin-bottom: 15px;
-    font-size: 18px;
-}
-
-.secao-rodape ul {
-    list-style: none;
-}
-
-.secao-rodape ul li {
-    margin-bottom: 10px;
-}
-
-.secao-rodape ul li a {
-    color: #ddd;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.secao-rodape ul li a:hover {
-    color: #e3350d;
-}
-
-.icones-sociais {
-    display: flex;
-    gap: 15px;
-}
-
-.icones-sociais a img {
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s;
-}
-
-.icones-sociais a img:hover {
-    transform: scale(1.1);
-}
-
-.rodape-inferior {
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid #444;
 }
-
 /* Botões */
 button {
     background-color: #e3350d;
@@ -162,22 +111,18 @@ button:hover {
     header .container {
         flex-direction: column;
     }
-    
+
     nav ul {
         margin-top: 15px;
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     nav ul li {
         margin: 5px;
     }
-    
+
     .conteudo-rodape {
         flex-direction: column;
-    }
-    
-    .secao-rodape {
-        margin-bottom: 30px;
     }
 }

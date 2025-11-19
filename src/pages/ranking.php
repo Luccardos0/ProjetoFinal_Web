@@ -9,22 +9,8 @@
     <link rel="stylesheet" href="ranking.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="logo">
-                <img src="img/logo2.png" alt="Memóremon">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index2.html">Início</a></li>
-                    <li><a href="telajogo.html">Jogo</a></li>
-                    <li><a href="login.html">Área do Jogador</a></li>
-                    <li><a href="editarperfil.html">Editar Perfil</a></li>
-                    <li><a href="ranking.html">Ranking</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    
+    <?php require '../components/header.php'; ?>
 
     <main>
         <div class="container">
