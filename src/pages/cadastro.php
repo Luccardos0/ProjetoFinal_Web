@@ -21,7 +21,7 @@
                         <p>Junte-se ao Memóremon e comece a jogar!</p>
                     </div>
                     
-                    <form class="formulario-cadastro" action="../back/processaCadastrop.php" method="POST">
+                    <form class="formulario-cadastro" action="../back/processaCadastro.php" method="POST">
                         <div class="grupo-formulario">
                             <label for="nome">Nome Completo</label>
                             <input type="text" id="nome" name="nome" required>
@@ -70,7 +70,7 @@
                         <button type="submit" class="botao-cadastrar">Criar Conta</button>
                         
                         <div class="link-login">
-                            <p>Já tem uma conta? <a href="login.html">Faça login aqui</a></p>
+                            <p>Já tem uma conta? <a href="./login.php">Faça login aqui</a></p>
                         </div>
                     </form>
                 </div>
