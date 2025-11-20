@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $_SESSION['cadastro_mensagem'] = [
                 'tipo' => 'sucesso',
-                'texto' => "✅ Bem-vindo(a) ao Memóremon, **{$nome}**! Seu cadastro foi concluído. Para acessar o jogo é necessário fazer o login."
+                'texto' => "Bem-vindo(a) ao Memóremon, {$nome}! Seu cadastro foi concluído. Para acessar o jogo é necessário fazer o login."
             ];
 
             header('Location: ../pages/login.php');

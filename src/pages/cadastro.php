@@ -35,7 +35,6 @@ $data_nascimento = $dados_anteriores['data-nascimento'] ?? '';
 <body>
 
     <?php require '../components/header.php'; ?>
-
     <?php include '../back/notificacaoMensagem.php'; ?>
 
     <main>
@@ -50,27 +49,27 @@ $data_nascimento = $dados_anteriores['data-nascimento'] ?? '';
                     <form class="formulario-cadastro" action="../back/processaCadastro.php" method="POST">
                         <div class="grupo-formulario">
                             <label for="nome">Nome Completo</label>
-                            <input type="text" id="nome" name="nome" required>
+                            <input type="text" id="nome" name="nome" required value="<?php echo htmlspecialchars($nome); ?>">
                         </div>
 
                         <div class="grupo-formulario">
                             <label for="cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf" required>
+                            <input type="text" id="cpf" name="cpf" required value="<?php echo htmlspecialchars($cpf); ?>">
                         </div>
 
                         <div class="grupo-formulario">
                             <label for="telefone">Telefone</label>
-                            <input type="text" id="telefone" name="telefone" required>
+                            <input type="text" id="telefone" name="telefone" required value="<?php echo htmlspecialchars($telefone); ?>">
                         </div>
 
                         <div class="grupo-formulario">
                             <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required value="<?php echo htmlspecialchars($email); ?>">
                         </div>
 
                         <div class="grupo-formulario">
                             <label for="usuario">Nome de Usuário</label>
-                            <input type="text" id="usuario" name="usuario" required>
+                            <input type="text" id="usuario" name="usuario" required value="<?php echo htmlspecialchars($usuario); ?>">
                         </div>
 
                         <div class="grupo-formulario">
@@ -85,7 +84,7 @@ $data_nascimento = $dados_anteriores['data-nascimento'] ?? '';
 
                         <div class="grupo-formulario">
                             <label for="data-nascimento">Data de Nascimento</label>
-                            <input type="date" id="data-nascimento" name="data-nascimento" required>
+                            <input type="date" id="data-nascimento" name="data-nascimento" required value="<?php echo htmlspecialchars($data_nascimento); ?>">
                         </div>
 
                         <div class="grupo-formulario grupo-checkbox">

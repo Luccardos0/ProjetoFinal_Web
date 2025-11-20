@@ -1,3 +1,11 @@
+<?php
+require '../back/autentica.php';
+
+verificar_autenticacao();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -11,6 +19,7 @@
 <body>
     
     <?php require '../components/header.php'; ?>
+    <?php include '../back/notificacaoMensagem.php'; ?>
 
     <main>
         <div class="container">

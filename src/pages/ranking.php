@@ -1,3 +1,11 @@
+<?php
+require '../back/autentica.php';
+
+verificar_autenticacao();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
