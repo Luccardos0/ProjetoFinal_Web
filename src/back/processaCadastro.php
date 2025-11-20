@@ -1,12 +1,23 @@
 <?php
 
-// recebendo o arquivo de configuração
+session_start();
+
 require 'config.php';
 
-// Array para armazenar mensagens de erro de validação
+// Array para armazenar mensagens de erro
 $errors = [];
 
-// Se receber uma requisição POST do formulário
+function validarCpf($cpf)
+{
+    $cpf = preg_replace('/[^0-9]/', '', $cpf);
+    if (strlen($cpf) != 11)
+        return false;
+    if (preg_match('/(\d)\1{10}/', $cpf))
+        return false;
+    return true;
+}
+
+// Precisa ser POST para funfar
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $nome = trim($_POST['nome'] ?? '');
@@ -19,26 +30,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data_nascimento = $_POST['data-nascimento'] ?? '';
     $termos_aceitos = isset($_POST['termos']);
 
-
-    // Validação dos Dados 
-
     // Todos os dados foram preenchidos corretamente?
-    if (empty($nome)) $errors[] = "O campo Nome Completo é obrigatório.";
-    if (empty($cpf)) $errors[] = "O campo CPF é obrigatório.";
-    if (empty($telefone)) $errors[] = "O campo Telefone é obrigatório.";
-    if (empty($email)) $errors[] = "O campo E-mail é obrigatório.";
-    if (empty($usuario)) $errors[] = "O campo Nome de Usuário é obrigatório.";
-    if (empty($senha)) $errors[] = "O campo Senha é obrigatório.";
-    if (empty($confirma_senha)) $errors[] = "O campo Confirmar Senha é obrigatório.";
-    if (empty($data_nascimento)) $errors[] = "O campo Data de Nascimento é obrigatório.";
-    if (!$termos_aceitos) $errors[] = "Você deve aceitar os termos e condições.";
+    if (empty($nome))
+        $errors[] = "O campo Nome Completo é obrigatório.";
+    if (empty($cpf))
+        $errors[] = "O campo CPF é obrigatório.";
+    if (empty($telefone))
+        $errors[] = "O campo Telefone é obrigatório.";
+    if (empty($email))
+        $errors[] = "O campo E-mail é obrigatório.";
+    if (empty($usuario))
+        $errors[] = "O campo Nome de Usuário é obrigatório.";
+    if (empty($senha))
+        $errors[] = "O campo Senha é obrigatório.";
+    if (empty($confirma_senha))
+        $errors[] = "O campo Confirmar Senha é obrigatório.";
+    if (empty($data_nascimento))
+        $errors[] = "O campo Data de Nascimento é obrigatório.";
+    if (!$termos_aceitos)
+        $errors[] = "Você deve aceitar os termos e condições.";
 
-    // Outras validações
+    // Filtro de email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "O E-mail fornecido é inválido.";
     }
 
-    // Implementar validação de CPF aqui
+    // Validando e *Salvando cpf apenas com números
+    if(!validarCpf($cpf)){
+        $errors[] = "O CPF fornecido é inválido.";
+    }
 
     // Validar senha
     if ($senha !== $confirma_senha) {
@@ -49,25 +69,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "A senha deve ter no mínimo " . min_senha . " caracteres.";
     }
 
-    // Inserindo no Banco se estiver tudo ok
+    // Inserindo no Banco se estiver tudo certinho
     if (empty($errors)) {
-        
+
         try {
             $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            // Salvando cpf apenas com números
-            $cpf_limpo = preg_replace('/[^0-9]/', '', $cpf); 
-            
+
             // Fazendo o  hash da senha por causa da segurança
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+            //Salvando só os n do cpf
+            $cpf_limpo = preg_replace('/[^0-9]/', '', $cpf);
 
             //inserindo no banco
             $sql = "INSERT INTO jogadores (nome_completo, cpf, telefone, email, nome_usuario, senha_hash, data_nascimento, termos_aceitos) 
                     VALUES (:nome, :cpf, :telefone, :email, :usuario, :senha_hash, :data_nascimento, :termos_aceitos)";
-            
+
             $stmt = $conn->prepare($sql);
-            
+
             $stmt->bindParam(':nome', $nome);
             $stmt->bindParam(':cpf', $cpf_limpo);
             $stmt->bindParam(':telefone', $telefone);
@@ -76,36 +96,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(':senha_hash', $senha_hash);
             $stmt->bindParam(':data_nascimento', $data_nascimento);
             $stmt->bindParam(':termos_aceitos', $termos_aceitos, PDO::PARAM_INT); // PDO::PARAM_INT para booleans/inteiros
-            
+
             $stmt->execute();
 
-            // arrumar gpt daqui para baixo
-            echo "<h1>✅ Sucesso!</h1>";
-            echo "<p>Bem-vindo ao Memóremon, **{$nome}**! Seu cadastro foi concluído com sucesso.</p>";
-            echo "<p><a href='login.html'>Faça Login</a></p>";
-            
+            $_SESSION['cadastro_mensagem'] = [
+                'tipo' => 'sucesso',
+                'texto' => "✅ Bem-vindo(a) ao Memóremon, **{$nome}**! Seu cadastro foi concluído. Para acessar o jogo é necessário fazer o login."
+            ];
+
+            header('Location: ../pages/login.php');
+            exit;
+
         } catch (PDOException $e) {
             if ($e->getCode() == 23000) {
-                 $errors[] = "Erro no cadastro: CPF, E-mail ou Nome de Usuário já está sendo utilizado. Por favor, verifique os dados.";
+                $errors[] = "Aconteceu um problema no seu cadastro: CPF, E-mail ou Nome de Usuário já está sendo utilizado. Por favor, verifique os dados.";
             } else {
-                 $errors[] = "Ocorreu um erro inesperado no servidor. Tente novamente mais tarde. (Detalhe: " . $e->getMessage() . ")";
+                $errors[] = "Erro no Servidor -> (Detalhe: " . $e->getMessage() . ")";
             }
         }
     }
 } else {
-    $errors[] = "Acesso inválido. Por favor, utilize o formulário de cadastro.";
+    header('Location: ../pages/cadastro.php');
+    $errors[] = "Acesso inválido.";
+    exit;
 }
-
-// Exibição erro
 
 if (!empty($errors)) {
-    echo "<h1>❌ Erros no Cadastro</h1>";
-    echo "<ul>";
-    foreach ($errors as $error) {
-        echo "<li>{$error}</li>";
-    }
-    echo "</ul>";
-    echo "<p><a href='cadastro.html'>Voltar ao Formulário de Cadastro</a></p>";
+    $_SESSION['cadastro_mensagem'] = [
+        'tipo' => 'erro',
+        'erros' => $errors,
+        'dados_anteriores' => $_POST // salvo os dados preenchidos antes
+    ];
 }
+
+header('Location: ../pages/cadastro.php');
+exit;
 
 ?>

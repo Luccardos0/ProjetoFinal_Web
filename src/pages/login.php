@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Memóremon</title>
-    <link rel="icon" href="img/pokebola.png" type="image/png">
-    <link rel="stylesheet" href="global2.css">
-    <link rel="stylesheet" href="login.css">
+    <link rel="icon" href="../img/pokebola.png" type="image/png">
+    <link rel="stylesheet" href="../css/global2.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     
     <?php require '../components/header.php'; ?>
+    <?php include '../back/notificacaoMensagem.php'; ?>
 
     <main>
         <section class="secao-login">
@@ -40,7 +41,7 @@
                         <button type="submit" class="botao-entrar">Entrar</button>
                         
                         <div class="link-cadastro">
-                            <p>Não tem uma conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+                            <p>Não tem uma conta? <a href="../pages/cadastro.php">Cadastre-se aqui</a></p>
                         </div>
                         
                         <div class="esqueci-senha">
