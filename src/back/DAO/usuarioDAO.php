@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require '../config.php';
+require '../back/config.php';
 
 function buscarUsuarioId($id)
 {

@@ -1,8 +1,6 @@
 :root {
     --color-primary-red: #e3350d;
     --color-primary-hover: #c12b0b;
-    --color-highlight-blue: #3498db;
-    --color-highlight-dark-blue: #2980b9;
     --color-dark-bg: #2c3e50;
     --color-dark-text: #333;
     --color-light-text: #ffffff;
@@ -120,23 +118,23 @@ button:hover {
 }
 
 /* Perfil */
+
 .menu-perfil {
     position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;
-    margin-left: 20px;
-    padding-bottom: 5px; 
-    padding-top: 5px;
+    margin-left: 1.5vw;
+    padding: 0.75vh 0;
 }
 
 .perfil-icone-container {
-    height: 40px;
-    width: 40px;
+    height: 6vmin;
+    width: 6vmin;
     border-radius: 50%;
     overflow: hidden;
-    border: 2px solid var(--color-light-text);
-    transition: all 0.2s;
+    border: 0.4vmin solid var(--color-light-text);
+    transition: all 0.2s ease;
 }
 
 .avatar-icone {
@@ -147,44 +145,47 @@ button:hover {
 }
 
 .menu-perfil:hover .perfil-icone-container {
-    border-color: #f39c12;
+    border-color: var(--color-primary-hover);
 }
 
 /* Menuzinho do perfil */
 
 .dropdown-menu {
-    display: none; 
+    display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: var(--color-dark-bg);
+    background-color: var(--color-neutral-bg);
+    border: 1.5px solid var(--color-footer-bg);
     min-width: 180px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
     z-index: 100;
     border-radius: 5px;
     overflow: hidden;
 }
 
 .dropdown-menu a {
-    color: var(--color-light-text);
+    color: var(--color-primary-red);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     font-size: 0.9em;
-    border-bottom: 1px solid #34495e;
     background-color: transparent;
     border-radius: 0;
 }
 
 .dropdown-menu a:hover {
-    background-color: var(--color-highlight-blue);
+    background-color: var(--color-primary-hover);
+    color: var(--color-light-text);
 }
 
 .dropdown-menu .dropdown-username {
+    cursor: default;
     padding: 12px 16px;
     font-weight: bold;
-    color: #ecf0f1;
-    border-bottom: 1px solid #34495e;
+    background-color: var(--color-primary-hover);
+    color: var(--color-light-text);
+    border-bottom: 1.5px solid var(--color-footer-bg);
     margin: 0;
 }
 
@@ -192,19 +193,21 @@ button:hover {
     display: block;
 }
 
+/* Botão login */
+
 .botao-login-header {
-    background-color: var(--color-highlight-blue) !important;
-    color: var(--color-light-text) !important;
-    padding: 8px 15px !important;
-    border-radius: 5px !important;
-    text-decoration: none !important;
-    font-weight: bold !important;
+    background-color: var(--color-primary-hover);
+    color: var(--color-light-text);
+    padding: 0.5rem 1rem;
+    border-radius: 1vh;
+    text-decoration: none;
+    font-weight: bold;
     transition: background-color 0.2s;
-    margin-left: 20px;
+    margin-left: 1vh;
 }
 
 .botao-login-header:hover {
-    background-color: var(--color-highlight-dark-blue) !important;
+    background-color: var(--color-dark-bg);
 }
 
 @media (max-width: 768px) {

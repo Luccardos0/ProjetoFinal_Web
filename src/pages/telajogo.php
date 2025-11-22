@@ -56,7 +56,7 @@ function formatarDataHora($data_db)
 <body>
 
     <?php require '../components/header.php'; ?>
-    <?php include '../back/notificacaoMensagem.php'; ?>
+    <?php include '../components/notificacaoMensagem.php'; ?>
 
     <main>
         <div class="container">

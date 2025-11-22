@@ -12,8 +12,8 @@
 
 <body>
 
-    <?php include '../components/header.php'; ?>
-    <?php include '../back/notificacaoMensagem.php'; ?>
+    <?php require '../components/header.php'; ?>
+    <?php include '../components/notificacaoMensagem.php'; ?>
     
     <main>
         <section class="secao-principal">
@@ -39,7 +39,7 @@
         </section>
     </main>
 
-    <?php include '../components/footer.php'; ?>
+    <?php require '../components/footer.php'; ?>
 
 </body>
 

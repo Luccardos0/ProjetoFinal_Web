@@ -63,7 +63,7 @@ function formataValor($key, $default = '', $dados)
 <body>
 
     <?php require '../components/header.php'; ?>
-    <?php include '../back/notificacaoMensagem.php'; ?>
+    <?php include '../components/notificacaoMensagem.php'; ?>
 
     <main>
         <section class="secao-editar">

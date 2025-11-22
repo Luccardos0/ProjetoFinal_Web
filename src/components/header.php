@@ -10,17 +10,17 @@ $username = $_SESSION['username'] ?? 'Jogador';
 
 $avatar_url = $logado
     ? "https://placehold.co/50x50/3498db/ffffff?text=" . substr($username, 0, 1)
-    : "https://placehold.co/50x50/cccccc/333333?text=👤";
-
-$link_area_jogador = $logado ? "../pages/telajogo.php" : "../pages/login.php";
+    : "";
 ?>
 
 <link rel="stylesheet" href="../css/global2.css">
 
 <header>
     <div class="container">
-        <div class="logo">
-            <img src="../img/logo2.png" alt="Memóremon">
+        <div class="logo" href="../pages/index.php">
+            <a href="<?php echo $logado ? '../pages/telajogo.php' : '../pages/index.php'; ?>">
+                <img src="../img/logo2.png" alt="Memóremon">
+            </a>
         </div>
         <nav>
             <ul>
@@ -31,12 +31,12 @@ $link_area_jogador = $logado ? "../pages/telajogo.php" : "../pages/login.php";
         </nav>
 
         <div class="menu-perfil">
-            <div class="perfil-icone-container">
-                <img src="<?php echo $avatar_url; ?>" alt="Perfil de <?php echo htmlspecialchars($username); ?>"
-                    class="avatar-icone">
-            </div>
-
             <?php if ($logado): ?>
+                <div class="perfil-icone-container">
+                    <img src="<?php echo $avatar_url; ?>" alt="Perfil de <?php echo htmlspecialchars($username); ?>"
+                        class="avatar-icone">
+                </div>
+
                 <div class="dropdown-menu">
                     <p class="dropdown-username">Olá, <?php echo htmlspecialchars($username); ?></p>
                     <a href="../pages/editarperfil.php">Editar Perfil</a>

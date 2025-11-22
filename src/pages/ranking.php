@@ -80,7 +80,7 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
 <body>
 
     <?php require '../components/header.php'; ?>
-    <?php include '../back/notificacaoMensagem.php'; ?>
+    <?php include '../components/notificacaoMensagem.php'; ?>
 
     <main>
         <div class="container">
@@ -172,13 +172,13 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
                                 ?>
                             </span>
                         </div>
-                        <button class="botao-melhorar">Melhorar Pontuação</button>
+                        <a class="botao-melhorar" href="./telajogo.php">Melhorar Pontuação</a>
                     </div>
 
                     <div class="cartao-lateral">
                         <h3>Novo Desafio</h3>
                         <p>Complete uma partida para entrar no ranking!</p>
-                        <a href="telajogo.html" class="botao-jogar">Jogar Agora</a>
+                        <a href="./telajogo.php" class="botao-jogar">Jogar Agora</a>
                     </div>
                 </div>
             </div>
