@@ -438,7 +438,7 @@ body {
 }
 
 .front {
-    background: #e3350d url('img/pokebola.png') center center / 60% no-repeat; /* Cor de fundo com imagem da pokebola */
+    background: #e3350d url('../img/pokebola.png') center center / 60% no-repeat; /* Cor de fundo com imagem da pokebola */
     border: 3px solid #fff;
 }
 

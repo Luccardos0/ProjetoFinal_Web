@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 require '../back/autentica.php';
-require '../back/usuarioDao.php';
+require '../back/DAO/usuarioDAO.php';
 
 verificar_autenticacao();
 $usuario_id = $_SESSION['user_id'] ?? 0;

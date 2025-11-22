@@ -9,5 +9,3 @@ define('DB_PASS', '1234'); // Sua senha do BD
 
 // Outras constantes de segurança/validação
 define('min_senha', 8);
-
-?>
