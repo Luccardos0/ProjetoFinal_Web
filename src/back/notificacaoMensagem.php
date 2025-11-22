@@ -1,6 +1,6 @@
 <?php
 
-$session_keys = ['login_mensagem', 'cadastro_mensagem'];
+$session_keys = ['login_mensagem', 'cadastro_mensagem', 'notificacao'];
 
 $mensagem_para_exibir = null;
 $key_to_clear = null;

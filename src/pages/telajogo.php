@@ -150,13 +150,8 @@ verificar_autenticacao();
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="conteudo-rodape">
-                Faculdade de Tecnologia da Unicamp - Programação Web - 2025
-            </div>
-        </div>
-    </footer>
+    <?php require '../components/footer.php'; ?>
+    
     <script src="../js/telajogo.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cpf = trim($_POST['cpf'] ?? '');
     $telefone = trim($_POST['telefone'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $usuario = trim($_POST['usuario'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $senha = $_POST['senha'] ?? '';
     $confirma_senha = $_POST['confirmar-senha'] ?? '';
     $data_nascimento = $_POST['data-nascimento'] ?? '';
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors[] = "O campo Telefone é obrigatório.";
     if (empty($email))
         $errors[] = "O campo E-mail é obrigatório.";
-    if (empty($usuario))
+    if (empty($username))
         $errors[] = "O campo Nome de Usuário é obrigatório.";
     if (empty($senha))
         $errors[] = "O campo Senha é obrigatório.";
@@ -83,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $cpf_limpo = preg_replace('/[^0-9]/', '', $cpf);
 
             //inserindo no banco
-            $sql = "INSERT INTO jogadores (nome_completo, cpf, telefone, email, nome_usuario, senha_hash, data_nascimento, termos_aceitos) 
-                    VALUES (:nome, :cpf, :telefone, :email, :usuario, :senha_hash, :data_nascimento, :termos_aceitos)";
+            $sql = "INSERT INTO jogadores (nome_completo, cpf, telefone, email, username, senha, data_nascimento, termos) 
+                    VALUES (:nome, :cpf, :telefone, :email, :username, :senha, :data_nascimento, :termos)";
 
             $stmt = $conn->prepare($sql);
 
@@ -92,11 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(':cpf', $cpf_limpo);
             $stmt->bindParam(':telefone', $telefone);
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':usuario', $usuario);
-            $stmt->bindParam(':senha_hash', $senha_hash);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':senha', $senha_hash);
             $stmt->bindParam(':data_nascimento', $data_nascimento);
-            $stmt->bindParam(':termos_aceitos', $termos_aceitos, PDO::PARAM_INT); // PDO::PARAM_INT para booleans/inteiros
-
+            $stmt->bindParam(':termos', $termos_aceitos, PDO::PARAM_INT);
             $stmt->execute();
 
             $_SESSION['cadastro_mensagem'] = [

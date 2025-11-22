@@ -5,7 +5,7 @@ function verificar_autenticacao()
         session_start();
     }
 
-    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
         $_SESSION['login_mensagem'] = [
             'tipo' => 'erro',

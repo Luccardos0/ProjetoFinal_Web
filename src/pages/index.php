@@ -13,7 +13,8 @@
 <body>
 
     <?php include '../components/header.php'; ?>
-
+    <?php include '../back/notificacaoMensagem.php'; ?>
+    
     <main>
         <section class="secao-principal">
             <div class="slides-principal">

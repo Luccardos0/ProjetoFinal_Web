@@ -8,7 +8,7 @@ if (isset($_SESSION['cadastro_mensagem']) && ($_SESSION['cadastro_mensagem']['ti
     $dados_anteriores = $_SESSION['login_mensagem']['dados_anteriores'] ?? [];
 }
 
-$usuario = $dados_anteriores['usuario'] ?? '';
+$username = $dados_anteriores['username'] ?? '';
 
 ?>
 
@@ -40,8 +40,8 @@ $usuario = $dados_anteriores['usuario'] ?? '';
 
                     <form class="formulario-login" action="../back/logar.php" method="POST">
                         <div class="grupo-formulario">
-                            <label for="usuario">Nome de Usuário</label>
-                            <input type="text" id="usuario" name="usuario" required value="<?php echo htmlspecialchars($usuario); ?>">
+                            <label for="username">Nome de Usuário</label>
+                            <input type="text" id="username" name="username" required value="<?php echo htmlspecialchars($username); ?>">
                         </div>
 
                         <div class="grupo-formulario">
@@ -69,13 +69,8 @@ $usuario = $dados_anteriores['usuario'] ?? '';
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="conteudo-rodape">
-                &copy; Faculdade de Tecnologia da Unicamp - Programação Web - 2025
-            </div>
-        </div>
-    </footer>
+    <?php require '../components/footer.php'; ?>
+
 </body>
 
 </html>

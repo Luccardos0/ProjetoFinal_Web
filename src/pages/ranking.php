@@ -13,12 +13,13 @@ verificar_autenticacao();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking Global - Memóremon</title>
     <link rel="icon" href="img/pokebola.png" type="image/png">
-    <link rel="stylesheet" href="global2.css">
-    <link rel="stylesheet" href="ranking.css">
+    <link rel="stylesheet" href="../css/global2.css">
+    <link rel="stylesheet" href="../css/ranking.css">
 </head>
 <body>
     
     <?php require '../components/header.php'; ?>
+    <?php include '../back/notificacaoMensagem.php'; ?>
 
     <main>
         <div class="container">
@@ -182,12 +183,6 @@ verificar_autenticacao();
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="conteudo-rodape">
-                &copy; Faculdade de Tecnologia da Unicamp - Programação Web - 2025
-            </div>
-        </div>
-    </footer>
+    <?php require '../components/footer.php'; ?>
 </body>
 </html>

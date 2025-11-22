@@ -14,7 +14,7 @@ $nome = $dados_anteriores['nome'] ?? '';
 $cpf = $dados_anteriores['cpf'] ?? '';
 $telefone = $dados_anteriores['telefone'] ?? '';
 $email = $dados_anteriores['email'] ?? '';
-$usuario = $dados_anteriores['usuario'] ?? '';
+$username = $dados_anteriores['username'] ?? '';
 $data_nascimento = $dados_anteriores['data-nascimento'] ?? '';
 // achei melhor deixar a senha em branco caso o cadastro dê pau
 
@@ -68,8 +68,8 @@ $data_nascimento = $dados_anteriores['data-nascimento'] ?? '';
                         </div>
 
                         <div class="grupo-formulario">
-                            <label for="usuario">Nome de Usuário</label>
-                            <input type="text" id="usuario" name="usuario" required value="<?php echo htmlspecialchars($usuario); ?>">
+                            <label for="username">Nome de Usuário</label>
+                            <input type="text" id="username" name="username" required value="<?php echo htmlspecialchars($username); ?>">
                         </div>
 
                         <div class="grupo-formulario">

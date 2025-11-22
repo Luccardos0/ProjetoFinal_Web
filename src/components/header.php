@@ -4,11 +4,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$logado = isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true;
+$logado = isset($_SESSION['logado']) && $_SESSION['logado'] === true;
 
-$nome_usuario = $_SESSION['username'] ?? 'Jogador';
-$avatar_url = $logado 
-    ? "https://placehold.co/50x50/3498db/ffffff?text=" . substr($nome_usuario, 0, 1)
+$username = $_SESSION['username'] ?? 'Jogador';
+
+$avatar_url = $logado
+    ? "https://placehold.co/50x50/3498db/ffffff?text=" . substr($username, 0, 1)
     : "https://placehold.co/50x50/cccccc/333333?text=👤";
 
 $link_area_jogador = $logado ? "../pages/telajogo.php" : "../pages/login.php";
@@ -24,23 +25,20 @@ $link_area_jogador = $logado ? "../pages/telajogo.php" : "../pages/login.php";
         <nav>
             <ul>
                 <li><a href="../pages/index.php">Início</a></li>
-                <li><a href="../pages/telajogo.php">Jogo</a></li> 
-                <li><a href="../pages/ranking.php">Ranking</a></li> 
+                <li><a href="../pages/telajogo.php">Jogo</a></li>
+                <li><a href="../pages/ranking.php">Ranking</a></li>
             </ul>
         </nav>
 
         <div class="menu-perfil">
             <div class="perfil-icone-container">
-                <img 
-                    src="<?php echo $avatar_url; ?>" 
-                    alt="Perfil de <?php echo htmlspecialchars($nome_usuario); ?>" 
-                    class="avatar-icone"
-                >
+                <img src="<?php echo $avatar_url; ?>" alt="Perfil de <?php echo htmlspecialchars($username); ?>"
+                    class="avatar-icone">
             </div>
-            
+
             <?php if ($logado): ?>
                 <div class="dropdown-menu">
-                    <p class="dropdown-username">Olá, <?php echo htmlspecialchars($nome_usuario); ?></p>
+                    <p class="dropdown-username">Olá, <?php echo htmlspecialchars($username); ?></p>
                     <a href="../pages/editarperfil.php">Editar Perfil</a>
                     <a href="../back/logout.php">Sair (Logout)</a>
                 </div>
