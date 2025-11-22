@@ -3,11 +3,11 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 function getPDOConnection() {
-    if (!defined('DB_HOST')) {
+    if (!defined('host')) {
         require $_SERVER['DOCUMENT_ROOT'] . '/projeto-web/src/back/config.php';
     }
     
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $pdo = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
 }

@@ -4,6 +4,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Falta esse!!!!
+
 require '../back/autentica.php';
 require '../back/DAO/partidaDAO.php';
 

@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 $logado = isset($_SESSION['logado']) && $_SESSION['logado'] === true;
 
-$username = $_SESSION['username'] ?? 'Jogador';
+$username = $_SESSION['username'] ?? '';
 
 $avatar_url = $logado
     ? "https://placehold.co/50x50/3498db/ffffff?text=" . substr($username, 0, 1)

@@ -3,6 +3,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Falta esse
+
 require 'autentica.php'; 
 require 'config.php';   
 
@@ -57,7 +59,7 @@ $destino_sucesso = '../pages/editarperfil.php';
 
 if (empty($errors) && !empty($dados_para_update)) {
     try {
-        $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+        $pdo = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $campos_sql = [];

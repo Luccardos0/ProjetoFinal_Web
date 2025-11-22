@@ -1,47 +1,92 @@
 <?php
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
-require '../back/config.php';
-
-function buscarUsuarioId($id)
+class UsuarioDAO
 {
-    if (!is_numeric($id) || $id <= 0) {
-        return [];
-    }
+    private $conn;
 
-    try {
-        if (!isset($pdo)) {
-            $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public function __construct()
+    {
+        $this->conn = $this->getConnection();
+    }
+    private function getConnection()
+    {
+        if (!defined('DB_HOST')) {
+            require $_SERVER['DOCUMENT_ROOT'] . '/projeto-web/src/back/config.php';
         }
 
-        $sql = "SELECT id, username, email, nome_completo, data_nascimento, cpf, telefone 
-                FROM jogadores 
-                WHERE id = :id_usuario";
+        try {
+            $conn = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conn;
+        } catch (PDOException $e) {
+            throw new Exception("Erro de conexão com o banco de dados.");
+        }
+    }
+    public function buscarUsuarioId($id)
+    {
+        try {
+            $sql = "SELECT id, username, email, nome_completo, data_nascimento, cpf, telefone 
+                    FROM jogadores 
+                    WHERE id = :id";
 
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':id_usuario', $id, PDO::PARAM_INT);
-        $stmt->execute();
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
 
-        $resultado = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $usuario ? $usuario : null;
+        } catch (PDOException $e) {
+            throw new Exception("Erro ao buscar usuário: " . $e->getMessage());
+        }
+    }
+    public function criarUsuario($dados)
+    {
+        try {
+            $sql_check = "SELECT id FROM jogadores WHERE email = :email OR username = :username OR cpf = :cpf_limpo";
+            $stmt_check = $this->conn->prepare($sql_check);
 
-        return $resultado ? $resultado : [];
+            $cpf_limpo = preg_replace('/[^0-9]/', '', $dados['cpf']);
 
-    } catch (PDOException $e) {
+            $stmt_check->bindParam(':email', $dados['email']);
+            $stmt_check->bindParam(':username', $dados['username']);
+            $stmt_check->bindParam(':cpf_limpo', $cpf_limpo);
+            $stmt_check->execute();
 
-        // Deu um belo de b.o 
-        $_SESSION['login_mensagem'] = [
-            'tipo' => 'erro',
-            'erros' => ["Problema grave, por favor tente logar novamente."],
-            'dados_anteriores' => []
-        ];
+            if ($stmt_check->rowCount() > 0) {
+                $duplicado = $stmt_check->fetch(PDO::FETCH_ASSOC);
+                $errors = array();
+                throw new Exception("CPF, E-mail ou Nome de Usuário já está sendo utilizado.");
+            }
 
-        header('Location: processaLogout.php');
-        exit;
+            $senha_hash = password_hash($dados['senha'], PASSWORD_DEFAULT);
+
+            $sql = "INSERT INTO jogadores (nome_completo, cpf, telefone, email, username, senha, data_nascimento, termos) 
+                    VALUES (:nome, :cpf_limpo, :telefone, :email, :username, :senha_hash, :data_nascimento, :termos)";
+
+            $stmt = $this->conn->prepare($sql);
+
+            $termos_int = $dados['termos_aceitos'] ? 1 : 0;
+            $stmt->bindParam(':nome', $dados['nome_completo']);
+            $stmt->bindParam(':cpf_limpo', $cpf_limpo);
+            $stmt->bindParam(':telefone', $dados['telefone']);
+            $stmt->bindParam(':email', $dados['email']);
+            $stmt->bindParam(':username', $dados['username']);
+            $stmt->bindParam(':senha_hash', $senha_hash);
+            $stmt->bindParam(':data_nascimento', $dados['data_nascimento']);
+            $stmt->bindParam(':termos', $termos_int, PDO::PARAM_INT);
+
+            $stmt->execute();
+            return true;
+
+        } catch (PDOException $e) {
+            throw new Exception("Erro no banco de dados: " . $e->getMessage());
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function __destruct()
+    {
+        $this->conn = null;
     }
 }
-?>
-

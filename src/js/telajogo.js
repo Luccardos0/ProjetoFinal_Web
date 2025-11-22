@@ -6,6 +6,8 @@
 
 document.addEventListener('DOMContentLoaded', iniciarEventos);
 
+// Falta esse - integração com o back-end
+
 // Seleção dos elementos principais da tela 
 const tabuleiro = document.querySelector('.tabuleiro-jogo');
 const botaoIniciar = document.querySelector('.botao-iniciar');

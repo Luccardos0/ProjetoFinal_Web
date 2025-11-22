@@ -6,6 +6,8 @@ if (session_status() == PHP_SESSION_NONE) {
 require 'autentica.php'; 
 require './DAO/partidaDAO.php';
 
+// Falta esse
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $_SESSION['notificacao'] = [
         'tipo' => 'erro',
