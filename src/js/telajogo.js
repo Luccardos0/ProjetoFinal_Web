@@ -259,7 +259,9 @@ function salvarPartida(resultado) {
 
       if (data.includes('sucesso')) {
         console.log('Partida salva com sucesso.');
-        //window.location.reload(); 
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         console.error('Falha ao salvar. Resposta:', data);
       }
