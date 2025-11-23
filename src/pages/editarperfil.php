@@ -4,8 +4,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Falta esse
-
 require '../back/autentica.php';
 require '../back/DAO/usuarioDAO.php';
 
@@ -13,23 +11,19 @@ verificar_autenticacao();
 $usuario_id = $_SESSION['user_id'] ?? 0;
 
 $dados_usuario = [];
-if ($usuario_id > 0) {
-    $dados_usuario = buscarUsuarioId($usuario_id);
+
+try {
+    $usuarioDAO = new UsuarioDAO();
+
+    if ($usuario_id > 0) {
+        $dados_usuario = $usuarioDAO->buscarUsuarioId($usuario_id);
+    }
+} catch (Exception $e) {
+    $dados_usuario = null;
 }
 
 $mensagem_sessao = $_SESSION['login_mensagem'] ?? [];
 $dados_anteriores = $mensagem_sessao['dados_anteriores'] ?? [];
-
-if (empty($dados_usuario)) {
-    $dados_usuario = [
-        'username' => '',
-        'email' => '',
-        'nome_completo' => '',
-        'data_nascimento' => '',
-        'cpf' => '',
-        'telefone' => ''
-    ];
-}
 
 if (!empty($dados_anteriores)) {
     $dados_usuario = array_merge($dados_usuario, $dados_anteriores);
@@ -48,7 +42,6 @@ function formataValor($key, $default = '', $dados)
 }
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -111,9 +104,9 @@ function formataValor($key, $default = '', $dados)
                                     value="<?= formataValor('cpf', '', $dados_usuario) ?>" readonly>
                             </div>
                             <div class="grupo-formulario">
-                                <label for="telefone">Telefone</label>
+                                <label for="telefone">Telefone *</label>
                                 <input type="tel" id="telefone" name="telefone"
-                                    value="<?= formataValor('telefone', '', $dados_usuario) ?>">
+                                    value="<?= formataValor('telefone', '', $dados_usuario) ?>" required>
                             </div>
                         </div>
 
@@ -130,7 +123,7 @@ function formataValor($key, $default = '', $dados)
 
                         <div class="acoes-formulario">
                             <button type="submit" class="botao-primario">Salvar Alterações</button>
-                            <a href="index2.html" class="botao-secundario">Cancelar</a>
+                            <a href="./editarperfil.php" class="botao-secundario">Cancelar</a>
                         </div>
                     </form>
                 </div>

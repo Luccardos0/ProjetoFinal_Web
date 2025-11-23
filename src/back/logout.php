@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-require "../back/setNotificacao.php";
+require_once "../back/setNotificacao.php";
 
 $_SESSION = array();
 session_destroy();

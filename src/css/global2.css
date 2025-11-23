@@ -302,6 +302,7 @@ button:hover {
 }
 
 .modal-close:hover {
+    background-color: var(--color-modal-border);
     color: var(--color-dark-text);
 }
 

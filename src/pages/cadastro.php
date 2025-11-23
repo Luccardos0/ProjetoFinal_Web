@@ -1,5 +1,9 @@
 <?php
+
 session_start();
+
+require '../back/autentica.php';
+verificarJogadorJaLogado();
 
 $dados_anteriores = array();
 $termos_aceitos = false;

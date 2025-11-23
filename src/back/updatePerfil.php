@@ -1,23 +1,25 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Falta esse
-
-require 'autentica.php'; 
-require 'config.php';   
+require 'autentica.php';
+require 'config.php';
+require '../back/DAO/usuarioDAO.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    setNotificacaoErro(array("Acesso inválido."));
     header('Location: ../pages/editarperfil.php');
     exit;
 }
 
 verificar_autenticacao();
+
 $usuario_id = $_SESSION['user_id'] ?? 0;
 
 if ($usuario_id <= 0) {
-    header('Location: processaLogout.php');
+    header('Location: processaLogout.php'); // Deu um belo de b.o
     exit;
 }
 
@@ -42,83 +44,43 @@ if (empty($nome)) {
     $dados_para_update['nome_completo'] = $nome;
 }
 
-$dados_para_update['telefone'] = $telefone; 
+$dados_para_update['telefone'] = $telefone;
 
 if (!empty($senha)) {
     if (strlen($senha) < min_senha) {
         $errors[] = "A nova senha deve ter no mínimo " . min_senha . " caracteres.";
     } elseif ($senha !== $confirmar_senha) {
-        $errors[] = "A nova senha e a confirmação de senha não coincidem.";
+        $errors[] = "A nova senha e a confirmação não são iguais.";
     } else {
         $dados_para_update['senha'] = password_hash($senha, PASSWORD_DEFAULT);
     }
 }
 
-$sucesso = false;
-$destino_sucesso = '../pages/editarperfil.php';
-
-if (empty($errors) && !empty($dados_para_update)) {
-    try {
-        $pdo = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $campos_sql = [];
-        $parametros = ['id_usuario' => $usuario_id];
-        
-        foreach ($dados_para_update as $campo => $valor) {
-            if (!empty($valor) || $campo === 'senha') { 
-                $campos_sql[] = "`{$campo}` = :{$campo}";
-                $parametros[":{$campo}"] = $valor;
-            }
-        }
-        
-        $sql = "UPDATE jogadores SET " . implode(', ', $campos_sql) . " WHERE id = :id_usuario";
-        
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($parametros);
-
-        $sucesso = true;
-
-    } catch (PDOException $e) {
-        $_SESSION['notificacao'] = [
-            'tipo' => 'erro',
-            'mensagem' => "Erro no servidor ao salvar as alterações. Tente novamente."
-        ];
-        $errors[] = "Falha no banco de dados. " . $e->getMessage(); 
-        $sucesso = false;
-    }
-}
-
-if ($sucesso) {
-    $_SESSION['notificacao'] = [
-        'tipo' => 'sucesso',
-        'mensagem' => "Perfil atualizado com sucesso! As alterações já estão visíveis abaixo."
-    ];
-    header('Location: ' . $destino_sucesso); 
-    exit;
-
-} elseif (empty($errors) && empty($dados_para_update)) {
-    $_SESSION['notificacao'] = [
-        'tipo' => 'aviso',
-        'mensagem' => "Nenhuma alteração detectada para salvar."
-    ];
-    header('Location: ' . $destino_sucesso); 
-    exit;
-
-} else {
-    if (!empty($errors)) {
-        $_SESSION['login_mensagem'] = [ 
-            'tipo' => 'erro',
-            'erros' => $errors,
-            'dados_anteriores' => [
-                'email' => $email, 
-                'nome_completo' => $nome,
-                'telefone' => $telefone
-            ] 
-        ];
-    }
+if (!empty($errors)) {
+    setNotificacaoErro($errors, [
+        'email' => $email,
+        'nome_completo' => $nome,
+        'telefone' => $telefone
+    ]);
 
     header('Location: ../pages/editarperfil.php');
     exit;
 }
-?>
+
+if (!empty($dados_para_update)) {
+    try {
+        $usuarioDAO = new UsuarioDAO();
+        $usuarioDAO->atualizarUsuario($usuario_id, $dados_para_update);
+        setNotificacaoSucesso("Perfil atualizado com sucesso!");
+    } catch (Exception $e) {
+        setNotificacaoErro(array("Erro ao atualizar o perfil. Erro: " . $e->getMessage()));
+
+        header('Location: ../pages/editarperfil.php');
+        exit;
+    }
+} else {
+    setNotificacao('aviso', ['texto' => "Nenhuma alteração para realizar."]);
+}
+
+header('Location: ../pages/editarperfil.php');
+exit;

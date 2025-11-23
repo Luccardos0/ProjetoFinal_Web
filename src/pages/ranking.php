@@ -1,34 +1,42 @@
 <?php
-// Certifica-se de que a sessão está iniciada, o que é fundamental para usar $_SESSION
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Falta esse!!!!
-
 require '../back/autentica.php';
-require '../back/DAO/partidaDAO.php';
+require_once '../back/setNotificacao.php';
+require '../back/DAO/PartidaDAO.php';
 
 verificar_autenticacao();
 
-// 1. CHAMAR A FUNÇÃO PARA OBTER O TOP 10 GLOBAL
-$ranking_global = buscarRankingTop10();
-
 $id = $_SESSION['user_id'] ?? 0;
-$melhor_posicao_jogador = encontrarMelhorPosicao($id);
-// 2. FUNÇÕES AUXILIARES DE FORMATAÇÃO (Para garantir que a página renderize corretamente)
+$username_logado = $_SESSION['username'] ?? 'SeuUsername';
 
-/**
- * Formata segundos (DECIMAL) para o formato MM:SS.
- * Assumimos que o tempo_gasto_seg é um DECIMAL.
- */
+$ranking_global = [];
+$melhor_posicao_jogador = [
+    'posicao' => '-',
+    'dimensao' => 'N/A',
+    'num_jogadas' => 'N/A'
+];
+
+try {
+    $partidaDAO = new PartidaDAO();
+
+    $ranking_global = $partidaDAO->buscarRankingTop10();
+
+    if ($id > 0) {
+        $melhor_posicao_jogador = $partidaDAO->encontrarMelhorPosicao($id);
+    }
+
+} catch (Exception $e) {
+    setNotificacaoErro(array("Erro crítico ao carregar rankings: " . $e->getMessage()));
+}
+
 function formatarTempoJogo($segundos)
 {
     $total_segundos = floor($segundos);
     $min = floor($total_segundos / 60);
     $sec = $total_segundos % 60;
-
-    // Inclui centésimos para maior precisão (opcional)
     $decimal = round($segundos - $total_segundos, 2) * 100;
 
     if ($decimal > 0) {
@@ -37,35 +45,24 @@ function formatarTempoJogo($segundos)
     return sprintf('%02d:%02d', $min, $sec);
 }
 
-/**
- * Formata a data do banco (DATETIME) para DD/MM/AAAA.
- */
 function formatarData($data_db)
 {
     try {
         $date_time = new DateTime($data_db);
-        return $date_time->format('d/m/Y');
+        return $date_time->format('d/m/Y H:i');
     } catch (Exception $e) {
         return 'Data Inválida';
     }
 }
 
-/**
- * Adiciona o sufixo 'º' à posição.
- */
 function formatarPosicao($posicao)
 {
-    return $posicao . 'º';
+    if (is_numeric($posicao)) {
+        return $posicao . 'º';
+    }
+    return $posicao;
 }
-
-// Assumimos que o username do jogador logado está na sessão para o cartão lateral
-$username_logado = $_SESSION['username'] ?? 'SeuUsername';
-
-// NOTE: A lógica para 'Sua Melhor Posição' (15º) não foi implementada no DAO, 
-// então usaremos dados estáticos/placeholder nessa seção.
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -80,18 +77,12 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
 </head>
 
 <body>
-
     <?php require '../components/header.php'; ?>
     <?php include '../components/notificacaoMensagem.php'; ?>
 
     <main>
         <div class="container">
             <h1 class="titulo-pagina">Ranking Global de Jogadores</h1>
-
-            <div class="info-ranking">
-                <p>Top 10 melhores partidas pelos maiores tabuleiros e menor número de jogadas</p>
-            </div>
-
             <div class="conteiner-ranking">
                 <div class="tabela-ranking">
                     <div class="cabecalho-tabela">
@@ -114,7 +105,6 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
                         <?php $posicao = 1; ?>
                         <?php foreach ($ranking_global as $partida): ?>
                             <?php
-                            // Classes especiais para pódium
                             $classe_lugar = '';
                             if ($posicao === 1)
                                 $classe_lugar = 'primeiro-lugar';
@@ -154,7 +144,6 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
                         <div class="ranking-usuario">
                             <span class="posicao-usuario">
                                 <?php
-                                // Acessa a chave 'posicao' e formata se não for o placeholder '-'
                                 $posicao = $melhor_posicao_jogador['posicao'];
                                 echo $posicao !== '-' ? formatarPosicao($posicao) : $posicao;
                                 ?>
@@ -162,13 +151,11 @@ $username_logado = $_SESSION['username'] ?? 'SeuUsername';
                             <span class="nome-usuario"><?= htmlspecialchars($username_logado) ?></span>
                             <span class="tabuleiro-usuario">
                                 <?php
-                                // Acessa a chave 'dimensao'
                                 echo htmlspecialchars($melhor_posicao_jogador['dimensao']);
                                 ?>
                             </span>
                             <span class="jogadas-usuario">
                                 <?php
-                                // Acessa a chave 'num_jogadas'
                                 $jogadas = $melhor_posicao_jogador['num_jogadas'];
                                 echo $jogadas !== '-' ? htmlspecialchars($jogadas) . ' jogadas' : htmlspecialchars($jogadas);
                                 ?>

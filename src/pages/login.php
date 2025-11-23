@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+require '../back/autentica.php';
+verificarJogadorJaLogado();
+
 $dados_anteriores = [];
 if (isset($_SESSION['notificacao']) && ($_SESSION['notificacao']['tipo'] === 'erro')) {
     $dados_anteriores = $_SESSION['notificacao']['dados_anteriores'] ?? [];
@@ -12,7 +15,6 @@ $username = $dados_anteriores['username'] ?? '';
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

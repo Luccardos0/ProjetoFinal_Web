@@ -1,18 +1,26 @@
 <?php
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 require '../back/autentica.php';
-require '../back/DAO/partidaDAO.php';
+require '../back/DAO/PartidaDAO.php';
 
 verificar_autenticacao();
 
 $jogador_id = $_SESSION['user_id'] ?? 0;
-$username = $_SESSION['username'] ?? 'Jogador Desconhecido';
+$username = $_SESSION['username'] ?? '';
 
 $historico_partidas = [];
-if ($jogador_id > 0) {
-    $historico_partidas = buscarUltimasPartidas($jogador_id, 5);
+
+try {
+    if ($jogador_id > 0) {
+        $partidaDAO = new PartidaDAO();
+        $historico_partidas = $partidaDAO->buscarUltimasPartidas($jogador_id);
+    }
+} catch (Exception $e) {
+    $historico_partidas = [];
 }
 
 function formatarTempoJogo($segundos)
@@ -38,11 +46,7 @@ function formatarDataHora($data_db)
     }
 }
 
-
-// Falta esse 
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">

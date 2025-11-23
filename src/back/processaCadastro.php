@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 require '../back/config.php';
 require '../back/DAO/usuarioDAO.php';
-require '../back/setNotificacao.php';
+require_once '../back/setNotificacao.php';
 
 $errors = array();
 

@@ -3,7 +3,8 @@
 session_start();
 
 require './config.php';
-require './setNotificacao.php';
+require_once './setNotificacao.php';
+require './DAO/usuarioDAO.php';
 
 $errors = [];
 
@@ -23,18 +24,11 @@ if (empty($username) || empty($senha)) {
 
 if (empty($errors)) {
     try {
-        $conn = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "SELECT id, username, senha FROM jogadores WHERE username = :username LIMIT 1";
+        $usuarioDAO = new UsuarioDAO();
+        $jogador = $usuarioDAO->logar($username, $senha);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-
-        $jogador = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($jogador && password_verify($senha, $jogador['senha'])) {
+        if ($jogador) {
 
             $_SESSION['logado'] = true;
             $_SESSION['user_id'] = $jogador['id'];

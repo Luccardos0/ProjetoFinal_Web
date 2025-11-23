@@ -1,6 +1,6 @@
 <?php
 
-require "../back/setNotificacao.php";
+require_once "../back/setNotificacao.php";
 
 function verificar_autenticacao()
 {
@@ -13,6 +13,21 @@ function verificar_autenticacao()
         setNotificacaoErro("Você precisa estar logado para acessar a área de jogo ou ranking do Memóremon. Faça login ou cadastre-se.");
 
         header('Location: ../pages/login.php');
+        exit;
+    }
+}
+
+function verificarJogadorJaLogado()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (isset($_SESSION['logado']) && $_SESSION['logado'] === true) {
+
+        setNotificacaoErro("Você já está logado, por favor saia da conta atual para logar ou criar uma outra conta.");
+
+        header('Location: ../pages/telajogo.php');
         exit;
     }
 }

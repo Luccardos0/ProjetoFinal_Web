@@ -1,7 +1,5 @@
 <?php
 
-// Falta esse
-
 $mensagem_para_exibir = $_SESSION['notificacao'] ?? null;
 
 if ($mensagem_para_exibir) {
@@ -16,9 +14,9 @@ if ($mensagem_para_exibir) {
             
             <div class="modal-header">
                 <?php if ($tipo === 'sucesso'): ?>
-                    <h3>🎉 Sucesso!</h3>
+                    <h3>Sucesso!</h3>
                 <?php elseif ($tipo === 'erro'): ?>
-                    <h3>⚠️ Atenção</h3>
+                    <h3>Atenção</h3>
                 <?php endif; ?>
             </div>
             

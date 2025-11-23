@@ -6,8 +6,6 @@
 
 document.addEventListener('DOMContentLoaded', iniciarEventos);
 
-// Falta esse - integração com o back-end
-
 // Seleção dos elementos principais da tela 
 const tabuleiro = document.querySelector('.tabuleiro-jogo');
 const botaoIniciar = document.querySelector('.botao-iniciar');
@@ -232,7 +230,7 @@ function iniciarEventos() {
 }
 
 // Integração com o Back
-function salvarPartida(resultado) {
+function salvarPartida(venceu) {
   let tempoFinalSeg = segundos;
   let dimensaoFinal = `${tamanho}x${tamanho}`;
 
@@ -247,38 +245,19 @@ function salvarPartida(resultado) {
   dados.append('modalidade', modo);
   dados.append('num_jogadas', jogadas);
   dados.append('tempo_gasto_seg', tempoString);
-  dados.append('resultado', resultado ? 'Vitoria' : 'Derrota');
+  dados.append('resultado', venceu ? 'Vitoria' : 'Derrota');
 
-  console.log("Enviando dados da partida:", Object.fromEntries(dados.entries()));
-
-  fetch('../back/salvarPartida.php', {
-    method: 'POST',
-    body: dados
-  })
-    .then(response => response.text())
-    .then(data => {
-      console.log('Resposta bruta do servidor:', data);
-
-      if (data.includes('sucesso')) {
-        console.log('Partida salva com sucesso.');
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      } else {
-        console.error('Falha ao salvar. Resposta:', data);
-      }
+  try {
+    fetch('../back/salvarPartida.php', {
+      method: 'POST',
+      body: dados
+    }).then(response => {
+      setTimeout(() => {
+        window.location.reload();
+      }, 700);
     })
-    .catch(error => {
-      console.error('Erro de conexão ou servidor ao salvar a partida:', error);
-    });
-}
-
-function tratarRespostaSalvarPartida(data) {
-  if (data.status === 'sucesso') {
-    console.log('Partida salva:', data.mensagem);
-    window.location.reload();
-  } else {
-    console.error('Falha ao salvar a partida:', data.mensagem);
+  } catch (error) {
+    console.error(error);
   }
 }
 

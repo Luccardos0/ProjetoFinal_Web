@@ -84,6 +84,57 @@ class UsuarioDAO
             throw $e;
         }
     }
+    public function logar($username, $senha)
+    {
+        try {
+            $sql = "SELECT id, username, senha FROM jogadores WHERE username = :username LIMIT 1";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
+
+            $jogador = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($jogador && password_verify($senha, $jogador['senha'])) {
+                unset($jogador['senha']);
+                return $jogador;
+            } else {
+                return null; // Erro no login (senha ou usuário errado)
+            }
+
+        } catch (PDOException $e) {
+            throw new Exception("Erro ao tentar logar: " . $e->getMessage());
+        }
+    }
+    public function atualizarUsuario($id, $dados)
+    {
+        if (!is_numeric($id) || empty($dados)) {
+            return false;
+        }
+
+        try {
+            $campos_sql = [];
+            $parametros = ['id_usuario' => $id];
+
+            foreach ($dados as $campo => $valor) {
+                $campos_sql[] = "`{$campo}` = :{$campo}";
+                $parametros[":{$campo}"] = $valor;
+            }
+
+            if (empty($campos_sql)) {
+                return true;
+            }
+
+            $sql = "UPDATE jogadores SET " . implode(', ', $campos_sql) . " WHERE id = :id_usuario";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute($parametros);
+
+            return true;
+
+        } catch (PDOException $e) {
+            throw new Exception("Erro ao atualizar o perfil: " . $e->getMessage());
+        }
+    }
 
     public function __destruct()
     {
