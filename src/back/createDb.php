@@ -1,11 +1,12 @@
 <?php
 
 // 1º Ter o MySQL e PHP instalados
-// 2º Definir as variavéis da sua conexão
-// Obs: Tem que atualizar no config.php tbm
-$host = "localhost";
-$user = "root";
-$pass = "1234";
+// 2º Definir as variavéis da sua conexão no config.php
+require_once __DIR__ . "/config.php";
+
+$host = host;
+$user = user;
+$pass = pass;
 
 $conn = new mysqli($host, $user, $pass);
 
