@@ -11,7 +11,7 @@ class UsuarioDAO
     private function getConnection()
     {
         if (!defined('DB_HOST')) {
-            require $_SERVER['DOCUMENT_ROOT'] . '/projeto-web/src/back/config.php';
+            require $_SERVER['DOCUMENT_ROOT'] . '/src/back/config.php';
         }
 
         try {
