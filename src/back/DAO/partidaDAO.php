@@ -13,9 +13,13 @@ class PartidaDAO
     }
     private function getConnection()
     {
-        if (!defined('DB_HOST')) {
-            require $_SERVER['DOCUMENT_ROOT'] . '/src/back/config.php';
+        $configPath = __DIR__ . '/../config.php';
+
+        if (!file_exists($configPath)) {
+            throw new Exception("Arquivo de configuração não encontrado: " . $configPath);
         }
+
+        require_once $configPath;
 
         try {
             // Conexão com o BD

@@ -10,9 +10,13 @@ class UsuarioDAO
     }
     private function getConnection()
     {
-        if (!defined('DB_HOST')) {
-            require $_SERVER['DOCUMENT_ROOT'] . '/src/back/config.php';
+        $configPath = __DIR__ . '/../config.php';
+
+        if (!file_exists($configPath)) {
+            throw new Exception("Arquivo de configuração não encontrado: " . $configPath);
         }
+
+        require_once $configPath;
 
         try {
             $conn = new PDO("mysql:host=" . host . ";dbname=" . name, user, pass);
