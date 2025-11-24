@@ -1,10 +1,12 @@
+Link do Video: https://drive.google.com/file/d/1I1lKEgEQYmEXQaJQiHwrBr3oD-7-yZ4N/view?usp=sharing
+
 📌 Orientações para Rodar o Projeto
 
 1. Certifique-se de ter MySQL e PHP instalados (pode usar o XAMPP).
 2. O projeto precisa estar rodando dentro do seu servidor PHP.
 3. Atualize as informações de conexão com o banco no arquivo config.php.
 4. No diretório htdocs do XAMPP, crie uma pasta chamada projeto-web (ou qualquer outro nome que preferir).
-5. Coloque todos os arquivos do projeto dentro dessa pasta.
+5. Coloque todos os arquivos do projeto (src) dentro dessa pasta.
 6. No navegador, acesse o arquivo createDb.php para criar o banco e as tabelas.
 - Exemplo de URL (ajuste conforme o nome da sua pasta):
 - http://localhost/projeto-web/src/back/createDb.php
